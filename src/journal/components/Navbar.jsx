@@ -5,7 +5,9 @@ import { LoginOutlined, MenuOutlined } from '@mui/icons-material';
 import  Grid  from '@mui/material/Grid';
 import { Typography } from '@mui/material';
 
-export const Navbar = ({ drawerWidth }) => {
+export const Navbar = ({ drawerWidth  , setState , state}) => {
+
+    
     return (
         <AppBar
             position='fixed'
@@ -18,7 +20,9 @@ export const Navbar = ({ drawerWidth }) => {
                 <IconButton
                     color="inherit"
                     edge="start"
-                    sx={{display:{sm:'none'} , mr:2}}
+                    sx={{display:{sm:'none'} , mr:2 }}
+                    onClick={()=>setState(!state)}
+                    
                 >
                     <MenuOutlined/>
                 </IconButton>

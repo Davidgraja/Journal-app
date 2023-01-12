@@ -2,7 +2,7 @@ import { TurnedInNot } from '@mui/icons-material'
 import { Box, Divider, Drawer, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from '@mui/material'
 import React from 'react'
 
-export const SideBar = ({drawerWidth}) => {
+export const SideBar = ({drawerWidth , showSideBar}) => {
     return (
         <Box
             component={'nav'}
@@ -12,7 +12,7 @@ export const SideBar = ({drawerWidth}) => {
                 variant="permanent"
                 open
                 sx={{
-                    display:{ xs:'none', sm:'block'},
+                    display:{ xs: showSideBar ? 'block' : 'none', sm:'block'},
                     '& .MuiDrawer-paper' : {boxSizing:'border-box' , width : drawerWidth}
                 }}
             >
