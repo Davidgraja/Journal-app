@@ -1,0 +1,24 @@
+import { singInWidthGoogle } from "../../firebase/providers"
+import { checkingCredentials, login, logout } from "./authSlice"
+
+export const checkingAuthentication = (email , password) =>{
+    
+    return async (dispatch) => {
+
+        dispatch(checkingCredentials())
+
+    }
+}
+
+export const startGoogleSingIn = () =>{
+    
+    return async (dispatch) =>{
+        dispatch(checkingCredentials());
+
+        const result =  await singInWidthGoogle();
+
+        if(!result.ok) return dispatch(logout({errorMessage : result.errorMessage}));
+
+        dispatch(login( result ));
+    }
+}
