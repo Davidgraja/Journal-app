@@ -21,7 +21,6 @@ export const LoginPage = () => {
 
     const isAuthenticated = useMemo(()=> status === 'checking' , [status] )
 
-
     const {email , password , onEventInput , onResetForm} = useForm({
         email : '',
         password :'' 
@@ -29,7 +28,8 @@ export const LoginPage = () => {
 
     const onSubmitForm = (event)=>{
         event.preventDefault()
-        if(!email || !password ) return;
+        // if(!email || !password ) return;
+        
         console.log({email , password})
         // onResetForm()
 
@@ -65,7 +65,7 @@ export const LoginPage = () => {
                         <Grid item  xs={12} sx={{mt:2}} >
                             <TextField
                                 label="Contraseña" 
-                                placeholder="123456" 
+                                placeholder="Tu contraseña" 
                                 type="password"  
                                 fullWidth
                                 autoComplete="off"

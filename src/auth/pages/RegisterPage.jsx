@@ -1,18 +1,49 @@
 import { Link as RouterLink } from 'react-router-dom';
-import TextField   from '@mui/material/TextField'
-import Typography  from '@mui/material/Typography'
-import Grid     from '@mui/material/Grid'
-import  Button  from '@mui/material/Button'
-import  Link  from '@mui/material/Link'
+import { TextField , Typography , Grid , Button , Link } from '@mui/material';
 import  {Google}  from '@mui/icons-material'
 import { AuthLayout } from '../layout/AuthLayout';
+import { useForm } from '../../hooks';
+import { useState } from 'react';
+
+const formData = {
+    email : '',
+    password : '',
+    displayName : ''
+}
+
+export const formValidations = {
+
+    email : [(value)=> value.includes('@') , 'El correo  debe de tener un @' ],
+    password : [ (value) => value.length >= 6 , 'La contraseña debe de tener más de 6 de digitos.'],
+    displayName : [ ( value )=> value.length >= 1 , 'El nombre es obligarorio.' ]
+
+}
 
 export const RegisterPage = () => {
+
+    const [formSubmitted, setFormSubmitted] = useState(false)
+
+    const {
+        formState , email , password , displayName, onEventInput , onResetForm , isFormValid,
+        emailValid , passwordValid , displayNameValid  
+    
+    } = useForm( formData  , formValidations );
+
+
+
+
+    const onSumitRegister = (event) =>{
+        event.preventDefault();
+        setFormSubmitted(true)
+        if(!email || !password || !displayName) return;
+        else if (password.length < 6) return;
+        console.log({email , password , displayName})
+    }
+
     return (
 
         <AuthLayout title='Crear cuenta' >
-
-                <form>
+                <form onSubmit={ onSumitRegister } >
 
                     <Grid container >
 
@@ -23,7 +54,11 @@ export const RegisterPage = () => {
                                 type="text"  
                                 fullWidth
                                 autoComplete="off"
-                                
+                                name ='displayName'
+                                value={ displayName }
+                                onChange = {onEventInput}
+                                error={!!displayNameValid  && formSubmitted}
+                                helperText={displayNameValid}
                                 />
                         </Grid>
 
@@ -34,7 +69,11 @@ export const RegisterPage = () => {
                                 type="email"  
                                 fullWidth
                                 autoComplete="off"
-                                
+                                name = 'email'
+                                value={email}
+                                onChange={onEventInput}
+                                error={!!emailValid  && formSubmitted}
+                                helperText={emailValid}
                                 />
                         </Grid>
 
@@ -45,6 +84,11 @@ export const RegisterPage = () => {
                                 type="password"  
                                 fullWidth
                                 autoComplete="off"
+                                name='password'
+                                value={password}
+                                onChange={onEventInput}
+                                error={!!passwordValid && formSubmitted}
+                                helperText={passwordValid}
 
                                 />
                         </Grid>
@@ -52,7 +96,7 @@ export const RegisterPage = () => {
                         <Grid container spacing={2} sx={{mt:1 , mb: 1}}>
 
                             <Grid item xs={12} >
-                                <Button variant="contained"  fullWidth >
+                                <Button variant="contained"  fullWidth  type='submit' >
                                     <Typography>Crear cuenta</Typography>
                                 </Button>
                             </Grid>
