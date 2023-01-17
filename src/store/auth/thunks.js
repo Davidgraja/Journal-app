@@ -1,4 +1,4 @@
-import { singInWidthGoogle } from "../../firebase/providers"
+import { registerUserWithEmailPassword, singInWidthGoogle } from "../../firebase/providers"
 import { checkingCredentials, login, logout } from "./authSlice"
 
 export const checkingAuthentication = (email , password) =>{
@@ -17,8 +17,23 @@ export const startGoogleSingIn = () =>{
 
         const result =  await singInWidthGoogle();
 
-        if(!result.ok) return dispatch(logout({errorMessage : result.errorMessage}));
+        if(!result.ok) return dispatch(logout({errorMessage}));
 
         dispatch(login( result ));
     }
+}
+
+export const startCreatingUserEmailPassword = ({email , password , displayName}) =>{
+
+    return async (dispatch) => {
+        dispatch(checkingCredentials());
+
+        const {ok , uid , photoURL , errorMessage}= await registerUserWithEmailPassword({email , password , displayName});
+        
+        if( !ok ) return dispatch( logout({errorMessage}));
+
+        dispatch(login({uid , photoURL , email , displayName}))
+
+    }
+
 }
