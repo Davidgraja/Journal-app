@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { checkingAuthentication, startGoogleSingIn } from '../../store/auth';
+import { startGoogleSingIn, startLoginWithEmailAndPassword } from '../../store/auth';
 
 import { Link as RouterLink } from 'react-router-dom';
 
-import { TextField , Typography , Grid , Button , Link} from '@mui/material';
+import { TextField , Typography , Grid , Button , Link, Alert} from '@mui/material';
 import  {Google}  from '@mui/icons-material';
 
 
@@ -16,24 +16,23 @@ import { useForm } from '../../hooks';
 
 export const LoginPage = () => {
 
-    const {status} = useSelector( state => state.auth )
+    const {status , errorMessage} = useSelector( state => state.auth )
     const dispatch = useDispatch();
 
     const isAuthenticated = useMemo(()=> status === 'checking' , [status] )
 
-    const {email , password , onEventInput , onResetForm} = useForm({
+    const {email , password , onEventInput , onResetForm } = useForm({
         email : '',
         password :'' 
     })
 
     const onSubmitForm = (event)=>{
         event.preventDefault()
-        // if(!email || !password ) return;
+        if(!email || !password ) return;
         
-        console.log({email , password})
         // onResetForm()
-
-        dispatch(checkingAuthentication(email , password))
+        dispatch(startLoginWithEmailAndPassword({email , password}))    
+    
     }
 
     const onGoogleSingIn = () =>{
@@ -76,6 +75,10 @@ export const LoginPage = () => {
                         </Grid>
 
                         <Grid container spacing={2} sx={{mt:1 , mb: 1}}>
+
+                            <Grid item xs={12} sm={12} sx = {{ display : !!errorMessage ?  '' : 'none' }} >
+                                <Alert severity='error'  >{ errorMessage }</Alert>
+                            </Grid>
 
                             <Grid item xs={12} sm={6} >
                                 <Button variant="contained" fullWidth type='submit' disabled={ isAuthenticated } >
