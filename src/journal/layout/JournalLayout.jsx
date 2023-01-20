@@ -14,6 +14,7 @@ export const JournalLayout = ({children}) => {
         <Box 
             sx={{display:'flex'}} 
             component={'div'}
+            className="animate__animated animate__fadeIn animate__faster"
             
         >
 

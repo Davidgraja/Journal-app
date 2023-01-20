@@ -1,12 +1,20 @@
-import Toolbar from '@mui/material/Toolbar';
-import AppBar from '@mui/material/AppBar';
-import IconButton  from '@mui/material/IconButton';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { FormControlLabel, Switch, Typography  , IconButton , Grid , Toolbar , AppBar} from '@mui/material';
 import { LoginOutlined, MenuOutlined } from '@mui/icons-material';
-import  Grid  from '@mui/material/Grid';
-import { Typography } from '@mui/material';
+
+import { startLogout } from '../../store/auth/thunks';
+import { onChangeDarkMode } from '../../store/auth';
 
 export const Navbar = ({ drawerWidth  , setState , state}) => {
 
+    const {darkMode} = useSelector((state)=> state.theme);
+    const dispatch = useDispatch(); 
+
+
+    const onLogout = () =>{
+        dispatch(startLogout());
+    }
     
     return (
         <AppBar
@@ -28,8 +36,16 @@ export const Navbar = ({ drawerWidth  , setState , state}) => {
                 </IconButton>
                 
                 <Grid container direction='row' justifyContent='space-between' alignItems='center'>
-                    <Typography variant='h6' noWrap >Journal App</Typography>
-                    <IconButton color='error'>
+                    <Typography variant='h6' noWrap sx={{color:'secondary.main'}}>Journal App</Typography>
+
+                    <FormControlLabel 
+                        control={<Switch  color='success' checked={ darkMode } />} 
+                        label='Dark mode' 
+                        labelPlacement='end' 
+                        onChange={()=> dispatch(onChangeDarkMode())}
+                    />
+                    
+                    <IconButton color='error' onClick={ onLogout }>
                         <LoginOutlined/>
                     </IconButton>
                 </Grid>

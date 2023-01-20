@@ -21,7 +21,7 @@ export const LoginPage = () => {
 
     const isAuthenticated = useMemo(()=> status === 'checking' , [status] )
 
-    const {email , password , onEventInput , onResetForm } = useForm({
+    const { email , password , onEventInput } = useForm({
         email : '',
         password :'' 
     })
@@ -30,13 +30,11 @@ export const LoginPage = () => {
         event.preventDefault()
         if(!email || !password ) return;
         
-        // onResetForm()
-        dispatch(startLoginWithEmailAndPassword({email , password}))    
+        dispatch(startLoginWithEmailAndPassword({email , password}));   
     
     }
 
     const onGoogleSingIn = () =>{
-        console.log('onGoogleSingIn');
         dispatch(startGoogleSingIn());
     }
 
@@ -44,7 +42,10 @@ export const LoginPage = () => {
 
         <AuthLayout title='Login' >
 
-                <form onSubmit={ onSubmitForm } >
+                <form 
+                    onSubmit={ onSubmitForm } 
+                    className="animate__animated animate__fadeIn animate__faster"
+                >
 
                     <Grid container >
 
@@ -54,10 +55,10 @@ export const LoginPage = () => {
                                 placeholder="example@gmail.com" 
                                 type="email"  
                                 fullWidth
-                                autoComplete="off"
                                 name='email'
                                 value={ email }
                                 onChange={ onEventInput }
+                                color='secondary'
                                 />
                         </Grid>
 
@@ -71,6 +72,7 @@ export const LoginPage = () => {
                                 name='password'
                                 value={ password }
                                 onChange={ onEventInput }
+                                color='secondary'
                                 />
                         </Grid>
 
@@ -81,13 +83,13 @@ export const LoginPage = () => {
                             </Grid>
 
                             <Grid item xs={12} sm={6} >
-                                <Button variant="contained" fullWidth type='submit' disabled={ isAuthenticated } >
+                                <Button variant="contained" fullWidth type='submit' disabled={ isAuthenticated } color='secondary' >
                                     <Typography>Login</Typography>
                                 </Button>
                             </Grid>
 
                             <Grid item xs={12} sm={6} >
-                                <Button variant="contained" fullWidth onClick={ onGoogleSingIn } disabled={ isAuthenticated } >
+                                <Button variant="contained" fullWidth onClick={ onGoogleSingIn } disabled={ isAuthenticated } color='secondary'>
                                     <Google/>
                                     <Typography sx={{ml:1}}>Google</Typography>
                                 </Button>

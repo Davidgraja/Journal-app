@@ -4,12 +4,13 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useForm } from '../../hooks';
-
-import { AuthLayout } from '../layout/AuthLayout';
-
 import { TextField , Typography , Grid , Button , Link, Alert } from '@mui/material';
+
+import { useForm } from '../../hooks';
+import { AuthLayout } from '../layout/AuthLayout';
 import { startCreatingUserEmailPassword } from '../../store/auth';
+
+
 
 
 const formData = {
@@ -37,9 +38,7 @@ export const RegisterPage = () => {
 
     const {
         formState , email , password , displayName, onEventInput , onResetForm , isFormValid,
-        emailValid , passwordValid , displayNameValid  
-    
-    } = useForm( formData  , formValidations );
+        emailValid , passwordValid , displayNameValid } = useForm( formData  , formValidations );
 
 
     
@@ -51,14 +50,18 @@ export const RegisterPage = () => {
         if(!isFormValid) return;
         
         dispatch(startCreatingUserEmailPassword(formState))
-        // onResetForm()
+
         setFormSubmitted(false)
     }
 
     return (
 
         <AuthLayout title='Crear cuenta' >
-                <form onSubmit={ onSumitRegister } >
+                <form 
+                    onSubmit={ onSumitRegister } 
+                    className="animate__animated animate__fadeIn animate__faster"
+                    
+                    >
 
                     <Grid container >
 
@@ -74,6 +77,7 @@ export const RegisterPage = () => {
                                 onChange = {onEventInput}
                                 error={!!displayNameValid  && formSubmitted}
                                 helperText={displayNameValid}
+                                color='secondary'
                                 />
                         </Grid>
 
@@ -89,6 +93,7 @@ export const RegisterPage = () => {
                                 onChange={onEventInput}
                                 error={!!emailValid  && formSubmitted}
                                 helperText={emailValid}
+                                color='secondary'
                                 />
                         </Grid>
 
@@ -104,7 +109,7 @@ export const RegisterPage = () => {
                                 onChange={onEventInput}
                                 error={!!passwordValid && formSubmitted}
                                 helperText={passwordValid}
-
+                                color='secondary'
                                 />
                         </Grid>
 
@@ -115,7 +120,7 @@ export const RegisterPage = () => {
                             </Grid>
 
                             <Grid item xs={12} >
-                                <Button variant="contained"  fullWidth  type='submit' disabled ={isCheckingAuthenticated} >
+                                <Button variant="contained"  fullWidth  type='submit' disabled ={isCheckingAuthenticated} color='secondary' >
                                     <Typography>Crear cuenta</Typography>
                                 </Button>
                             </Grid>

@@ -1,4 +1,3 @@
-
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth";
 import { FirebaseAuth } from "./config";
 
@@ -10,7 +9,7 @@ export const singInWidthGoogle = async () =>{
         
         const result =  await  signInWithPopup(FirebaseAuth , googleProvider);
 
-        // const credentials =  GoogleAuthProvider.credentialFromResult(result); // obtener credenciales si las llegamos a necesitar 
+        //? const credentials =  GoogleAuthProvider.credentialFromResult(result); // obtener credenciales si las llegamos a necesitar 
 
         const {displayName , email , photoURL , uid} = result.user
         return{
@@ -22,8 +21,8 @@ export const singInWidthGoogle = async () =>{
 
         let errorMessage; 
         
-        if(error.message.includes('auth/popup-closed-by-user')) errorMessage = 'Se ha cancelado la autenticación con Google'
-        else errorMessage = 'Lo sentimos a ocurrido un error , intentelo mas tarde'
+        if(error.message.includes('auth/popup-closed-by-user')) errorMessage = 'Se ha cancelado la autenticación con Google';
+        else errorMessage = 'Lo sentimos a ocurrido un error , intentelo mas tarde';
         return {
             ok : false ,
             errorMessage
@@ -36,15 +35,13 @@ export const singInWidthGoogle = async () =>{
 
 export const registerUserWithEmailPassword = async ({email , password , displayName}) =>{
     try {   
-
-        console.log({email , password , displayName});
         
         const response = await createUserWithEmailAndPassword(FirebaseAuth ,  email ,  password);
         const {uid , photoURL} = response.user;
 
-        //TODO : Actualizar el displayName Firebase
+        //? : forma de Actualizar el displayName o la photoURL en Firebase
 
-         await updateProfile(FirebaseAuth.currentUser , { displayName }) // forma de saber  cual es el usuario actual cuando se autentica un usuario usando Firebase
+         await updateProfile(FirebaseAuth.currentUser , { displayName }) //? forma de saber  cual es el usuario actual cuando se autentica un usuario usando Firebase
         
         return {
             ok : true ,
@@ -77,7 +74,8 @@ export const loginWithEmailAndPassword = async ({email , password}) =>{
 
         if(error.message.includes('auth/wrong-password')) errorMessage = 'La contraseña ingresada no ha sido encontrada , por favor veriquela'
         else if (error.message.includes('auth/user-not-found')) errorMessage = 'El correo  ingresado no ha sido encontrado, por favor verifiquelo'
-        else errorMessage = error.message
+        else if (error.message.includes('auth/too-many-requests')) errorMessage = 'El acceso a esta cuenta se ha inhabilitado temporalmente debido a muchos intentos fallidos de inicio de sesión. Puede restaurarlo inmediatamente restableciendo su contraseña o puede volver a intentarlo más tarde.'
+        else errorMessage  = 'Lo sentimos a ocurrido un error , intentelo mas tarde '
 
         return {
             ok: false ,
@@ -86,4 +84,15 @@ export const loginWithEmailAndPassword = async ({email , password}) =>{
 
     }
 
+}
+
+
+//?  funcion que permite hacer el logout del usuario con firebase
+
+export const logoutFirebase = async () =>{
+
+    //? singOut de firebase cierra todos  proveedores , google , facebook , etc.
+    
+    return await FirebaseAuth.signOut()
+    
 }
