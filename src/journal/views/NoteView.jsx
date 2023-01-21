@@ -19,7 +19,7 @@ export const NoteView = () => {
             </Grid>
 
             <Grid item>
-                <Button color='primary' sx={{padding:1}}>
+                <Button color='secondary' sx={{padding:1}}>
                     <SaveOutlined sx={{mr:1 , fontSize:28}}/>
                     Guardar
                 </Button>
@@ -29,7 +29,7 @@ export const NoteView = () => {
                 <TextField 
                     type='text'
                     variant='filled'
-                    color='primary'
+                    color='secondary'
                     placeholder='Ingrese un titulo'
                     label='Titulo'
                     fullWidth
@@ -39,7 +39,7 @@ export const NoteView = () => {
                 <TextField 
                     type='text'
                     variant='filled'
-                    color='primary'
+                    color='secondary'
                     multiline
                     placeholder='¿ Qué sucedió el dia de hoy ?'
                     fullWidth

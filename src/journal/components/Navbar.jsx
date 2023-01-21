@@ -4,7 +4,7 @@ import { FormControlLabel, Switch, Typography  , IconButton , Grid , Toolbar , A
 import { LoginOutlined, MenuOutlined } from '@mui/icons-material';
 
 import { startLogout } from '../../store/auth/thunks';
-import { onChangeDarkMode } from '../../store/auth';
+import { onChangeDarkMode } from '../../store/theme/themeSlice';
 
 export const Navbar = ({ drawerWidth  , setState , state}) => {
 

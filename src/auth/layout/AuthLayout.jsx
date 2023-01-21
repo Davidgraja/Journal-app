@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { FormControlLabel, Grid, Switch, Typography } from '@mui/material';
-import { onChangeDarkMode } from '../../store/auth';
+import { onChangeDarkMode } from '../../store/theme/themeSlice';
+
 
 export const AuthLayout = ({ children , title=""}) => {
 
