@@ -31,11 +31,21 @@ export const journalSlice = createSlice({
         },
 
         setSaving : (state )=>{
-
+            state.isSaving = true;
+            // TODO : Mensaje de error    
         },
 
         updateNote : (state , action)=>{
+            state.isSaving = false;
 
+            state.notes = state.notes.map( note => {
+                if( note.id == action.payload.id){
+                    return action.payload
+                }    
+                return note;
+            } );
+
+            // Todo : Mostrar mensaje de actualizacio
         } ,
 
         deleteById : (state , action)=>{

@@ -5,6 +5,7 @@ import { LoginOutlined, MenuOutlined } from '@mui/icons-material';
 
 import { startLogout } from '../../store/auth/thunks';
 import { onChangeDarkMode } from '../../store/theme/themeSlice';
+import { setActiveNote } from '../../store/journal';
 
 export const Navbar = ({ drawerWidth  , setState , state}) => {
 
@@ -14,6 +15,7 @@ export const Navbar = ({ drawerWidth  , setState , state}) => {
 
     const onLogout = () =>{
         dispatch(startLogout());
+        dispatch(setActiveNote(null))
     }
     
     return (

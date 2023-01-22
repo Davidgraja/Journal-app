@@ -12,7 +12,10 @@ import  {Google}  from '@mui/icons-material';
 import { AuthLayout } from '../layout/AuthLayout';
 import { useForm } from '../../hooks';
 
-
+const formData = {
+    email : '',
+    password :'' 
+}
 
 export const LoginPage = () => {
 
@@ -21,10 +24,7 @@ export const LoginPage = () => {
 
     const isAuthenticated = useMemo(()=> status === 'checking' , [status] )
 
-    const { email , password , onEventInput } = useForm({
-        email : '',
-        password :'' 
-    })
+    const { email , password , onEventInput } = useForm(formData)
 
     const onSubmitForm = (event)=>{
         event.preventDefault()

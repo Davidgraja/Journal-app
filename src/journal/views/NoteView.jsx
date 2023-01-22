@@ -1,10 +1,35 @@
+import { useEffect, useMemo } from 'react';
 import { SaveOutlined } from '@mui/icons-material';
 import { Button, Grid, TextField, Typography } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { useForm } from '../../hooks/useForm';
 import { ImageGallery } from '../components';
+import { setActiveNote, startSaveNote } from '../../store/journal';
 
 export const NoteView = () => {
+
+    const dispatch = useDispatch();
+    const {active : noteActive} = useSelector( (state)=>  state.journal );
+
+    const { title , body  , onEventInput , formState  , date} = useForm( noteActive );
+    
+    const newDate = useMemo( () =>{
+        const reconstructionOfDate = new Date(date);
+        return reconstructionOfDate.toUTCString();
+    }, [date] )
+
+    
+    useEffect(() => {
+        dispatch( setActiveNote( formState ) )
+    
+    }, [ formState ])
+    
+    const onSaveNote = () =>{
+        dispatch( startSaveNote() );
+    }
+
     return (
-            
+
         <Grid 
             container 
             direction='row' 
@@ -15,11 +40,11 @@ export const NoteView = () => {
         >
 
             <Grid item>
-                <Typography fontSize={39}  fontWeight="light" > 28 de agosto , 2023</Typography>
+                <Typography fontSize={39}  fontWeight="light" >{ newDate }</Typography>
             </Grid>
 
             <Grid item>
-                <Button color='secondary' sx={{padding:1}}>
+                <Button onClick={onSaveNote}  color='secondary' sx={{padding:1}}>
                     <SaveOutlined sx={{mr:1 , fontSize:28}}/>
                     Guardar
                 </Button>
@@ -34,6 +59,9 @@ export const NoteView = () => {
                     label='Titulo'
                     fullWidth
                     sx={{border:'none' , mb:1}}
+                    name='title'
+                    value={title}
+                    onChange={ onEventInput }
                 />
 
                 <TextField 
@@ -44,6 +72,9 @@ export const NoteView = () => {
                     placeholder='¿ Qué sucedió el dia de hoy ?'
                     fullWidth
                     minRows={5}
+                    name='body'
+                    value={body}
+                    onChange={ onEventInput }
                 />
             </Grid>
 
