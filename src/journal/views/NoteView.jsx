@@ -71,9 +71,9 @@ export const NoteView = () => {
 
             <Grid item>
 
-                <input type="file" multiple onChange={ onFileInputChange }  style={{display:'none'} } ref={fileInputRef} />
+                <input type="file" multiple onChange={ onFileInputChange }  style={{display:'none'} } ref={fileInputRef}  />
 
-                <IconButton color='secondary' disabled={isSaving} onClick={ () => fileInputRef.current.click() }  >
+                <IconButton color='secondary' disabled={isSaving} onClick={ () => fileInputRef.current.click() } title='Añadir imagenes' >
                     <UploadOutlined/>
                 </IconButton>
 
