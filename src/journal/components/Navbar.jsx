@@ -15,8 +15,8 @@ export const Navbar = ({ drawerWidth  , setState , state}) => {
 
     const onLogout = () =>{
         dispatch(startLogout());
-        dispatch(setActiveNote(null))
-        dispatch(setNotes([]))
+        // dispatch(setActiveNote(null))
+        // dispatch(setNotes([]))
     }
     
     return (
