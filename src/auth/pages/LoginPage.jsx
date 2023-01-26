@@ -84,14 +84,14 @@ export const LoginPage = () => {
 
                             <Grid item xs={12} sm={6} >
                                 <Button variant="contained" fullWidth type='submit' disabled={ isAuthenticated } color='secondary' >
-                                    <Typography>Login</Typography>
+                                    <Typography color='secondary.light'>Login</Typography>
                                 </Button>
                             </Grid>
 
                             <Grid item xs={12} sm={6} >
                                 <Button variant="contained" fullWidth onClick={ onGoogleSingIn } disabled={ isAuthenticated } color='secondary'>
-                                    <Google/>
-                                    <Typography sx={{ml:1}}>Google</Typography>
+                                    <Google htmlColor='white'/>
+                                    <Typography sx={{ml:1}} color='secondary.light' >Google</Typography>
                                 </Button>
                             </Grid>
 

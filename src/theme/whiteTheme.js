@@ -8,7 +8,9 @@ export const whiteTheme = createTheme({
         },
         secondary :{
             main:'#2980B9',
-            light: '#5DADE2'
+            light: '#F2F8F5',
+            switch : '#2980B9'
+
         },
         error : {
             main : red.A400

@@ -5,10 +5,10 @@ export const journalSlice = createSlice({
     name: 'journal',
     initialState : {
         isSaving: false,
-        messageSaved : '',
+        messageSaved: {} ,
         notes : [],
         active : null
-        // imageUrl
+        
     },
     reducers: {
 
@@ -23,7 +23,7 @@ export const journalSlice = createSlice({
 
         setActiveNote : (state , action)=>{
             state.active = action.payload;
-            state.messageSaved = '';
+            state.messageSaved = {};
 
         },
 
@@ -34,7 +34,7 @@ export const journalSlice = createSlice({
 
         setSaving : (state )=>{
             state.isSaving = true;
-            state.messageSaved = '';
+            state.messageSaved = {};
         },
 
         updateNote : (state , action)=>{
@@ -49,7 +49,7 @@ export const journalSlice = createSlice({
 
             // Todo : Mostrar mensaje de actualizacio
 
-            state.messageSaved = `${action.payload.title} , actualizada correctamente`;
+            state.messageSaved = { type: 'update' };
         } ,
 
         setPhotosToActiveNote : (state , action) =>{
@@ -60,13 +60,14 @@ export const journalSlice = createSlice({
         clearNotesLogout : (state) =>{
             state.isSaving = false;
             state.notes = [];
-            state.messageSaved = '';
+            state.messageSaved = {};
             state.active = null;
         },
 
         deleteNoteById : (state , action)=>{
             state.active = null;
             state.notes =  state.notes.filter( note => note.id !== action.payload);
+            state.messageSaved = {type:'delete'}
         }
 
     }
@@ -75,4 +76,4 @@ export const journalSlice = createSlice({
 })
 
 // Action creators are generated for each case reducer function
-export const { savingNewNote ,addNewEmptyNote , setActiveNote , setNotes , deleteNoteById , setSaving , updateNote , deleteById , setPhotosToActiveNote , clearNotesLogout} = journalSlice.actions
+export const { savingNewNote ,addNewEmptyNote , setActiveNote , setNotes , deleteNoteById , setSaving , updateNote , deleteById , setPhotosToActiveNote , clearNotesLogout} = journalSlice.actions;

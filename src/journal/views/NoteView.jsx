@@ -32,10 +32,17 @@ export const NoteView = () => {
 
 
     useEffect(()=>{
-    
-        if( messageSaved.length > 0 ){
-            Swal.fire('Nota Actualizada' , messageSaved , 'success');
+        
+        if( messageSaved?.type == 'update'){
+            Swal.fire({
+                position: 'center',
+                icon:'success',
+                title: 'Nota actualizada',
+                showConfirmButton: false,
+                timer: 1500
+            });
         }
+        
 
     }, [ messageSaved ])
     
@@ -62,7 +69,7 @@ export const NoteView = () => {
             direction='row' 
             justifyContent="space-between" 
             alignItems='center' 
-            sx={{mb:1}} 
+            sx={{mb:1}}
             className="animate__animated animate__fadeIn animate__faster" 
         >
 
@@ -74,7 +81,7 @@ export const NoteView = () => {
 
                 <input type="file" multiple onChange={ onFileInputChange }  style={{display:'none'} } ref={fileInputRef}  />
 
-                <IconButton color='secondary' disabled={isSaving} onClick={ () => fileInputRef.current.click() } title='Añadir imagenes' >
+                <IconButton color='secondary' disabled={isSaving} onClick={ () => fileInputRef.current.click() } title ='Añadir imagenes' >
                     <UploadOutlined/>
                 </IconButton>
 
@@ -84,7 +91,7 @@ export const NoteView = () => {
                 </Button>
             </Grid>
 
-            <Grid container>
+            <Grid container >
                 <TextField 
                     type='text'
                     variant='filled'
@@ -95,7 +102,8 @@ export const NoteView = () => {
                     sx={{border:'none' , mb:1}}
                     name='title'
                     value={title}
-                    onChange={ onEventInput }
+                    onChange={ onEventInput }   
+                    
                 />
 
                 <TextField 

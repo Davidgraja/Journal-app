@@ -7,15 +7,14 @@ export const blackTheme = createTheme({
             main : '#17202A'
         },
         secondary : {
-            main : '#85929E',
-            light:'#FDFEFE' 
+            main : '#20D870',
+            light: '#F2F8F5',
+            switch : '#20D870'
         },
         error : {
             main : red.A400
         },
-        success:{
-            main:'#2ECC71'
-        }  
+        
 
     }
 }) 

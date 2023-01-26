@@ -121,7 +121,7 @@ export const RegisterPage = () => {
 
                             <Grid item xs={12} >
                                 <Button variant="contained"  fullWidth  type='submit' disabled ={isCheckingAuthenticated} color='secondary' >
-                                    <Typography>Crear cuenta</Typography>
+                                    <Typography color={'secondary.light'}>Crear cuenta</Typography>
                                 </Button>
                             </Grid>
 
@@ -130,7 +130,7 @@ export const RegisterPage = () => {
                     </Grid>
 
                     <Grid container direction="row" justifyContent="end">
-                        <Typography sx={{mr:1}}>¿Ya tiene una cuenta?</Typography>
+                        <Typography sx={{mr:1}}  >¿Ya tiene una cuenta?</Typography>
 
                         <Link  component={ RouterLink } color="inherit" to="/auth/login">
                             Ingesar

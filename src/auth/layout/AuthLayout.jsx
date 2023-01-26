@@ -28,7 +28,7 @@ export const AuthLayout = ({ children , title=""}) => {
                         label='Dark mode' 
                         labelPlacement='end' 
                         onChange={()=> dispatch(onChangeDarkMode())}
-                        sx={{color:'secondary.light'}}
+                        sx={{color:'secondary.switch'}}
                         
                 />
             </Grid>
