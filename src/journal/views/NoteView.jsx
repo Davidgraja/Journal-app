@@ -68,13 +68,14 @@ export const NoteView = () => {
             container 
             direction='row' 
             justifyContent="space-between" 
-            alignItems='center' 
-            sx={{mb:1}}
+            alignItems='center'
+            sx={{mb:1 , backgroundColor:'primary.main' , padding:2 , borderRadius: 4}}
             className="animate__animated animate__fadeIn animate__faster" 
+            
         >
 
             <Grid item>
-                <Typography fontSize={39}  fontWeight="light" >{ newDate }</Typography>
+                <Typography fontSize={39}  fontWeight="light" sx={{color:'info.main'}}>{ newDate }</Typography>
             </Grid>
 
             <Grid item>
@@ -91,7 +92,8 @@ export const NoteView = () => {
                 </Button>
             </Grid>
 
-            <Grid container >
+            <Grid container  >
+                
                 <TextField 
                     type='text'
                     variant='filled'
@@ -99,7 +101,7 @@ export const NoteView = () => {
                     placeholder='Ingrese un titulo'
                     label='Titulo'
                     fullWidth
-                    sx={{border:'none' , mb:1}}
+                    sx={{border:'none' , mb:1 , backgroundColor:'secondary.light' , borderRadius:2}}
                     name='title'
                     value={title}
                     onChange={ onEventInput }   
@@ -112,6 +114,7 @@ export const NoteView = () => {
                     color='secondary'
                     multiline
                     placeholder='¿ Qué sucedió el dia de hoy ?'
+                    sx={{borderRadius:2,backgroundColor:'secondary.light'}}
                     fullWidth
                     minRows={5}
                     name='body'

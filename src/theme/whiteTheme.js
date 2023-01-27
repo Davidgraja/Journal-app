@@ -9,14 +9,15 @@ export const whiteTheme = createTheme({
         secondary :{
             main:'#2980B9',
             light: '#F2F8F5',
-            switch : '#2980B9'
+            switch : '#2980B9',
+            // notes: '#2980B9'
 
         },
         error : {
             main : red.A400
         },
-        success:{
-            main:'#2ECC71'
+        info:{
+            main : '#181818' ,
         }
         
     }

@@ -15,8 +15,6 @@ export const Navbar = ({ drawerWidth  , setState , state}) => {
 
     const onLogout = () =>{
         dispatch(startLogout());
-        // dispatch(setActiveNote(null))
-        // dispatch(setNotes([]))
     }
     
     return (
@@ -46,6 +44,7 @@ export const Navbar = ({ drawerWidth  , setState , state}) => {
                         label='Dark mode' 
                         labelPlacement='end' 
                         onChange={()=> dispatch(onChangeDarkMode())}
+                        sx={{color:'secondary.switch'}}
                     />
                     
                     <IconButton color='error' onClick={ onLogout }>

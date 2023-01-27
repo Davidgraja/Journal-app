@@ -17,15 +17,15 @@ export const SideBarItem = ({ title= '' , body  , id ,  imageUrl = [] , date }) 
     }
 
     return (
-        <ListItem  disablePadding>
-            <ListItemButton onClick={ onClickNote } >
-                <ListItemIcon>
+        <ListItem  disablePadding sx={{width:1}} >
+            <ListItemButton onClick={ onClickNote }  >
+                <ListItemIcon sx={{color:'secondary.main'}}>
                     <TurnedInNot/>
                 </ListItemIcon>
 
-                <Grid container>
-                    <ListItemText primary={newTitle} />
-                    <ListItemText secondary={body} />
+                <Grid container alignItems='center' color={'info.main'} >
+                    <ListItemText primary={newTitle} sx={{mr:1}}/>
+                    <ListItemText secondary={body}  secondaryTypographyProps={{color:'info.main'}}/>
                 </Grid>
             </ListItemButton>
         </ListItem>

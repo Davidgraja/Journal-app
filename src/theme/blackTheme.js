@@ -9,11 +9,14 @@ export const blackTheme = createTheme({
         secondary : {
             main : '#20D870',
             light: '#F2F8F5',
-            switch : '#20D870'
+            switch : '#20D870',
         },
         error : {
             main : red.A400
         },
+        info:{
+            main : '#F2F8F5'
+        }
         
 
     }
