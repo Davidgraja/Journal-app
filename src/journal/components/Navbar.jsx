@@ -5,7 +5,6 @@ import { LoginOutlined, MenuOutlined } from '@mui/icons-material';
 
 import { startLogout } from '../../store/auth/thunks';
 import { onChangeDarkMode } from '../../store/theme/themeSlice';
-import { setActiveNote, setNotes } from '../../store/journal';
 
 export const Navbar = ({ drawerWidth  , setState , state}) => {
 
