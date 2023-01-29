@@ -1,5 +1,7 @@
 export const fileUpload = async ( file ) => {
-    if(!file) throw new Error('no existe ni un solo archivo que subir !')
+    if(!file) return null;
+
+    // if(!file) throw new Error('no existe ni un solo archivo que subir !')
     const cloudUrl  = 'https://api.cloudinary.com/v1_1/dym350jf0/upload';
 
     const formData  = new FormData();
@@ -22,6 +24,7 @@ export const fileUpload = async ( file ) => {
         
     } catch (error) {
         
-        throw new Error(error);
+        // throw new Error(error);
+        return null;
     }
 }
