@@ -17,7 +17,7 @@ export const  authenticatedState = {
 }
 
 
-export const  NotAuthenticatedState = {
+export const  notAuthenticatedState = {
     status : 'not-authenticated', 
     uid : null,
     email : null,
