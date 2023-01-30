@@ -17,7 +17,6 @@ export const startGoogleSingIn = () =>{
         dispatch(checkingCredentials());
 
         const result =  await singInWidthGoogle();
-
         if(!result.ok) return dispatch(logout( result));
 
         dispatch(login( result ));
@@ -47,7 +46,6 @@ export const startLoginWithEmailAndPassword = ({email , password}) =>{
         dispatch(checkingCredentials());
 
         const result  = await  loginWithEmailAndPassword({email , password});
-
         if( !result.ok ) return dispatch(logout( result ));
 
         dispatch(login( result ));
