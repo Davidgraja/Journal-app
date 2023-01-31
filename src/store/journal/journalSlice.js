@@ -47,8 +47,6 @@ export const journalSlice = createSlice({
                 return note;
             } );
 
-            // Todo : Mostrar mensaje de actualizacio
-
             state.messageSaved = { type: 'update' };
         } ,
 
