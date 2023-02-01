@@ -21,7 +21,7 @@ export const startNewNote = () =>{
         }
         
         
-        // punto en el cual quiero insertar mi nota , dentro  la coleción , añadimos la configuacion de la base de datos y la ruta de     donde quiro que se almacene tal informacion
+        // punto en el cual quiero insertar mi nota , dentro  la coleción , añadimos la configuacion de la base de datos y la ruta de donde quiro que se almacene tal informacion
         // hacemos referencia al documento , junto a su funcion de colletion( firebaseDb , path )
         
         const newDoc = doc( collection(FirebaseDB , `Journal-app/${uid}/notes`));
@@ -89,9 +89,8 @@ export const startDeletingNote = () =>{
         const {active : activeNote} = getState().journal
 
         const docRef = doc(FirebaseDB , `/Journal-app/${uid}/notes/${activeNote.id}`)
-        await deleteDoc(docRef);
+        await deleteDoc(docRef);     
 
-        dispatch(deleteNoteById(activeNote.id))
+        dispatch(deleteNoteById(activeNote.id));
     }
 }
-
