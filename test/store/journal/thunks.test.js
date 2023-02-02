@@ -1,19 +1,21 @@
-import { async } from "@firebase/util";
-import { collection, deleteDoc, doc, getDocs } from "firebase/firestore/lite";
+import { collection, deleteDoc, doc, getDocs, setDoc } from "firebase/firestore/lite";
 import { FirebaseDB } from "../../../src/firebase/config";
+import { fileUpload } from "../../../src/helpers/fileUpload";
 import { loadNotes } from "../../../src/helpers/loadNotes";
 
-import { addNewEmptyNote, savingNewNote, setActiveNote, setNotes } from "../../../src/store/journal/journalSlice";
-import { startLoadingNotes, startNewNote } from "../../../src/store/journal/thunks";
+import { addNewEmptyNote, deleteNoteById, savingNewNote, setActiveNote, setNotes, setPhotosToActiveNote, setSaving } from "../../../src/store/journal/journalSlice";
+import { startDeletingNote, startLoadingNotes, startNewNote, startUploadingFiles } from "../../../src/store/journal/thunks";
+import { firebaseClearDB } from "../../fixtures/firebaseClearDB";
 
-jest.mock("../../../src/helpers/loadNotes")
+jest.mock("../../../src/helpers/loadNotes");
+jest.mock("../../../src/helpers/fileUpload");
 
 describe('pruebas sobre journal thunks', () => { 
-
 
     const dispatch = jest.fn();
     const getState = jest.fn();
     const uid = 'TEST-UID'
+
     beforeEach ( ()=> jest.clearAllMocks());
 
     test('startNewNote debe de crear una nueva nota en blanco', async () => { 
@@ -42,15 +44,9 @@ describe('pruebas sobre journal thunks', () => {
         
         // Borrar de firebase
 
-        const collectionRef =  collection(FirebaseDB , `Journal-app/${uid}/notes`)
-        const docs = await getDocs(collectionRef)
+        await firebaseClearDB(uid);
 
-        const deletePromises = [];
-        docs.forEach( doc =>  deletePromises.push(deleteDoc(doc.ref)) );
-
-        await Promise.all(deletePromises);
-
-    })
+    },10000)
 
     test('startLoadingNotes debe de cargar las notas creadas anteriormente por el usuario', async () => {
 
@@ -65,14 +61,44 @@ describe('pruebas sobre journal thunks', () => {
 
     })
 
-    const prueba =  () =>{
-            //  await startLoadingNotes()(dispatch , getState)
-            throw new Error('el uid del usuario no existe')
-        
-    }
-
     test('startLoadingNotes debe de retornar un error si no se encuentra el uid del usuario' , async ()=>{
         getState.mockReturnValue({auth: { }});
         await expect( startLoadingNotes()(dispatch , getState)).rejects.toThrow()
-    })
+    },10000)
+
+
+    test('startUploadingFiles debe de llamar la accion setSaving y setPhotosToActiveNote', async () => { 
+        const imageTest = 'https://image1.jpg'
+        await fileUpload.mockResolvedValue( imageTest)
+        await  startUploadingFiles(['fileTest 1'])(dispatch);
+
+        expect(dispatch).toHaveBeenCalledWith(setSaving());
+        expect(dispatch).toHaveBeenCalledWith(setPhotosToActiveNote( [ 'https://image1.jpg' ]));
+
+
+    },10000)
+
+    test('startDeletingNote debe de eliminar  una nota creada por el usuario en Firebase y debe de llamar la accion  deleteNoteById', async () => { 
+        // ? creacion de la nota:
+        const noteTest = { title:'nota 1' , body:'cuerpo de la nota1'}; 
+
+        // ref a la collection en Firebase
+        const newDoc = doc( collection(FirebaseDB , `Journal-app/${uid}/notes`));
+        
+        // insertar la nota
+        await  setDoc(newDoc , noteTest);
+        
+        noteTest.id = newDoc.id;
+        
+        // ? retorno del store
+        getState.mockReturnValue({auth: uid , journal : {active: noteTest}});
+
+        // ? sujeto de pruebas 
+        await startDeletingNote()(dispatch , getState);
+
+        expect(dispatch).toHaveBeenCalledWith(deleteNoteById( noteTest.id ));
+        
+        // limpiando la base de datos de firebase 
+        await firebaseClearDB(uid);
+    },10000)
 })
