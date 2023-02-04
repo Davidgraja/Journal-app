@@ -19,19 +19,19 @@ const formData = {
 
 export const LoginPage = () => {
 
-    const {status , errorMessage} = useSelector( state => state.auth )
+    const {status , errorMessage} = useSelector( state => state.auth );
     const dispatch = useDispatch();
 
-    const isAuthenticated = useMemo(()=> status === 'checking' , [status] )
+    const isAuthenticated = useMemo(()=> status === 'checking' , [status] );
 
-    const { email , password , onEventInput } = useForm(formData)
+    const { email , password , onEventInput } = useForm(formData);
 
     const onSubmitForm = (event)=>{
         event.preventDefault()
         if(!email || !password ) return;
-        
+
         dispatch(startLoginWithEmailAndPassword({email , password}));   
-    
+
     }
 
     const onGoogleSingIn = () =>{
@@ -43,6 +43,7 @@ export const LoginPage = () => {
         <AuthLayout title='Login' >
 
                 <form 
+                    aria-label='submit-form'
                     onSubmit={ onSubmitForm } 
                     className="animate__animated animate__fadeIn animate__faster"
                 >
@@ -70,6 +71,9 @@ export const LoginPage = () => {
                                 fullWidth
                                 autoComplete="off"
                                 name='password'
+                                inputProps={{
+                                    'data-testid' : 'password' // forma de eniarle las props al input  encontrar el input cuando se este realizando los test
+                                }}
                                 value={ password }
                                 onChange={ onEventInput }
                                 color='secondary'
@@ -89,7 +93,7 @@ export const LoginPage = () => {
                             </Grid>
 
                             <Grid item xs={12} sm={6} >
-                                <Button variant="contained" fullWidth onClick={ onGoogleSingIn } disabled={ isAuthenticated } color='secondary'>
+                                <Button aria-label='google-btn' variant="contained" fullWidth onClick={ onGoogleSingIn } disabled={ isAuthenticated } color='secondary'>
                                     <Google htmlColor='white'/>
                                     <Typography sx={{ml:1}} color='secondary.light' >Google</Typography>
                                 </Button>
