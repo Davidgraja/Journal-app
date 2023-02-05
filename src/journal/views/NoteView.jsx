@@ -8,7 +8,6 @@ import { setActiveNote, startDeletingNote, startSaveNote, startUploadingFiles } 
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.css' 
 import { useRef } from 'react';
-import { startDeleteUser } from '../../store/auth/thunks';
 
 
 export const NoteView = () => {
@@ -62,10 +61,7 @@ export const NoteView = () => {
         dispatch(startDeletingNote())
     }
 
-    const onDeleteUser = () =>{
-        dispatch(startDeleteUser());
-    }
-
+    
     return (
 
         <Grid 
@@ -127,15 +123,15 @@ export const NoteView = () => {
                 />
             </Grid>
 
-            <Grid container justifyContent='end'>
+            { <Grid container justifyContent='end'>
 
                 <Button onClick={onDeleteNote} sx={{mt:2}} color='error'>
                     <DeleteOutline/>
                 </Button>
 
-            </Grid>
-
-            <button onClick={onDeleteUser} >eliminar cuenta</button>
+            </Grid> }
+            
+            
             {/* images gallery */}
 
             <ImageGallery  images = { noteActive.imageUrl } />
