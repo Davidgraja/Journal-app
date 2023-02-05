@@ -1,6 +1,11 @@
+import { async } from "@firebase/util";
+import { deleteUser, getAuth } from "firebase/auth";
 import { loginWithEmailAndPassword, logoutFirebase, registerUserWithEmailPassword, singInWidthGoogle } from "../../firebase/providers"
 import { clearNotesLogout } from "../journal";
 import { checkingCredentials, login, logout } from "./authSlice"
+
+
+deleteUser
 
 export const checkingAuthentication = () =>{
     
@@ -62,4 +67,14 @@ export const startLogout = () =>{
         dispatch(logout());
 
     }
+}
+
+export const startDeleteUser =()=>{
+
+    return async (dispatch)=>{
+        const auth = getAuth();
+        await deleteUser(auth.currentUser);
+        dispatch(clearNotesLogout());
+    }
+    
 }
