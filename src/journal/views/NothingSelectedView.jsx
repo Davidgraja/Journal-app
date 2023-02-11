@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 export const NothingSelectedView = () => {
 
     const {messageSaved} = useSelector( (state)=> state.journal );
-
+    
     useEffect(() => {
         
         if (messageSaved?.type == 'delete') {

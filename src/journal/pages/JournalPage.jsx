@@ -1,10 +1,9 @@
-import { JournalLayout } from '../layout/JournalLayout';
 import { NoteView, NothingSelectedView } from '../views';
 import { IconButton } from '@mui/material';
 import { AddOutlined } from '@mui/icons-material';
 import { startNewNote } from '../../store/journal';
 import { useDispatch, useSelector } from 'react-redux';
-import { MenuUser } from './Menu';
+import { MenuUser } from '../layout/Menu';
 
 export const JournalPage = () => {
     const { isSaving , active } = useSelector( (state)=> state.journal )

@@ -2,7 +2,7 @@ import { Grid } from '@mui/material'
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { CardNote } from '../components'
-import { MenuUser } from '../pages/Menu'
+import { MenuUser } from '../layout/Menu'
 
 export const Notes = () => {
 

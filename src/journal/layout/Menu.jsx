@@ -16,15 +16,10 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import { Create, Description, LoginOutlined, PersonRemove } from '@mui/icons-material';
-import { FormControlLabel, Switch } from '@mui/material';
-import { Notes } from '../views/Notes';
 import { useDispatch, useSelector } from 'react-redux';
 import { startLogout } from '../../store/auth/thunks';
-import { NoteView, NothingSelectedView } from '../views';
-import { startNewNote } from '../../store/journal';
+import { clearMessageSave, startNewNote } from '../../store/journal';
 import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -78,7 +73,6 @@ export const MenuUser = (  {children} ) => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
   const { displayName } = useSelector( state => state.auth );
-  const { active } = useSelector( state => state.journal );
   const dispatch = useDispatch(); 
 
   const navigate = useNavigate()
@@ -92,8 +86,15 @@ export const MenuUser = (  {children} ) => {
     setOpen(false);
   };
 
+  const onStartViewNotes = () =>{
+    navigate('/notes');
+    dispatch(clearMessageSave());
+  }
+
+
   const onStartNewNote = () =>{
     navigate('/')
+    dispatch(clearMessageSave())
     dispatch(startNewNote())
   }
 
@@ -101,8 +102,8 @@ export const MenuUser = (  {children} ) => {
   const icons = [
     {icon : <LoginOutlined/> , text : 'salir' , clickEvent : () => dispatch(startLogout()) },
     {icon : <PersonRemove/> , text : 'Eliminar cuenta' , clickEvent : () => {}},
-    {icon : <Description/> , text : 'Mis notas' , clickEvent : () => navigate('notes')},
-    {icon : <Create/> , text : '  Crear nueva nota' , clickEvent : () => onStartNewNote() , disableButton: active && true },
+    {icon : <Description/> , text : 'Mis notas' , clickEvent : onStartViewNotes  },
+    {icon : <Create/> , text : '  Crear nueva nota' , clickEvent :  onStartNewNote },
   ]
   
 
@@ -170,6 +171,7 @@ export const MenuUser = (  {children} ) => {
         <DrawerHeader />
 
             {children}
+
       </Main>
     </Box>
   );

@@ -6,29 +6,45 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/material';
+import { setActiveNote, startDeletingNote } from '../../store/journal';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-export const CardNote = ( {title , body} ) => {
-  return ( 
-    <Grid item >
+export const CardNote = ( {title , body , id , imageUrl = [] , date } ) => {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-        <Card sx={{ maxWidth: 345 }}>
+    const onDeleteNote = () =>{
+        dispatch(setActiveNote({id}));
+        dispatch(startDeletingNote());
+    }
 
-        <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-            {title}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-            { body }
-            </Typography>
-        </CardContent>
-        <CardActions>
-            <Button color='error' size="small">Eliminar</Button>
-            <Button color='secondary' size="small">Leer mas</Button>
-        </CardActions>
+    const onReadMore = () =>{
+        dispatch(setActiveNote( {title , body , id , imageUrl, date } ));
+        navigate('/')
+    }
 
-        </Card>
+    return ( 
+        <Grid item >
 
-    </Grid>
+            <Card sx={{ maxWidth: 345 }}>
 
- );
+            <CardContent>
+                <Typography gutterBottom variant="h5" component="div">
+                {title}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                { body }
+                </Typography>
+            </CardContent>
+            <CardActions>
+                <Button onClick={onDeleteNote} color='error' size="small">Eliminar</Button>
+                <Button onClick={ onReadMore } color='secondary' size="small">Leer mas</Button>
+            </CardActions>
+
+            </Card>
+
+        </Grid>
+
+    );
 }
