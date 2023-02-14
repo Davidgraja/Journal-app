@@ -27,7 +27,7 @@ export const CardNote = ( {title , body , id , imageUrl = [] , date } ) => {
     return ( 
         <Grid item >
 
-            <Card sx={{ maxWidth: 345 }}>
+            <Card sx={{ maxWidth: 360 }}>
 
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">

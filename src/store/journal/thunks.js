@@ -1,4 +1,5 @@
 import { collection, deleteDoc, doc, setDoc } from "firebase/firestore/lite";
+import { firebaseClearDB } from "../../helpers/firebaseClearDB";
 import { FirebaseDB } from "../../firebase/config";
 import { fileUpload, loadNotes } from "../../helpers";
 import { addNewEmptyNote, deleteNoteById, savingNewNote, setActiveNote, setNotes, setPhotosToActiveNote, setSaving, updateNote } from "./journalSlice";
@@ -85,10 +86,10 @@ export const startUploadingFiles = ( files = [] ) =>{
 
 export const startDeletingNote = () =>{
     return async ( dispatch , getState ) =>{
-        const {uid} = getState().auth
-        const {active : activeNote} = getState().journal
+        const {uid} = getState().auth;
+        const {active : activeNote} = getState().journal;
 
-        const docRef = doc(FirebaseDB , `/Journal-app/${uid}/notes/${activeNote.id}`)
+        const docRef = doc(FirebaseDB , `/Journal-app/${uid}/notes/${activeNote.id}`);
         await deleteDoc(docRef);     
 
         dispatch(deleteNoteById(activeNote.id));

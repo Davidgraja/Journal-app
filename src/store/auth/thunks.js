@@ -1,6 +1,6 @@
-import { async } from "@firebase/util";
 import { deleteUser, getAuth } from "firebase/auth";
 import { loginWithEmailAndPassword, logoutFirebase, registerUserWithEmailPassword, singInWidthGoogle } from "../../firebase/providers"
+import { firebaseClearDB } from "../../helpers/firebaseClearDB";
 import { clearNotes } from "../journal";
 import { checkingCredentials, login, logout } from "./authSlice"
 
@@ -73,6 +73,8 @@ export const startDeleteUser =()=>{
 
     return async (dispatch)=>{
         const auth = getAuth();
+
+        await firebaseClearDB(auth.currentUser.uid);
         await deleteUser(auth.currentUser);
         dispatch(clearNotes());
     }

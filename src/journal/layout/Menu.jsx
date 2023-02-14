@@ -16,11 +16,15 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+
+import Swal from 'sweetalert2';
 import { Create, Description, LoginOutlined, PersonRemove } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
-import { startLogout } from '../../store/auth/thunks';
+import { startDeleteUser, startLogout } from '../../store/auth/thunks';
 import { clearMessageSave, startNewNote } from '../../store/journal';
 import { useNavigate } from 'react-router-dom';
+import { FormControlLabel, Grid, Switch } from '@mui/material';
+import { onChangeDarkMode } from '../../store/theme/themeSlice';
 
 const drawerWidth = 240;
 
@@ -72,7 +76,9 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export const MenuUser = (  {children} ) => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
-  const { displayName } = useSelector( state => state.auth );
+  const { displayName  , uid} = useSelector( state => state.auth );
+  const { darkMode} = useSelector( state => state.theme );
+
   const dispatch = useDispatch(); 
 
   const navigate = useNavigate()
@@ -98,10 +104,35 @@ export const MenuUser = (  {children} ) => {
     dispatch(startNewNote())
   }
 
+  const onStartDeleteUser =  () =>{
+    Swal.fire({
+      title: '¿ Estas seguro de eliminar esta cuenta ?',
+      text: "Se perdera toda tu información!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor:  '#3085d6',
+      confirmButtonText: 'Eliminar cuenta',
+      cancelButtonText : 'Cancelar'
+    }).then( async (result) => {
+      
+      if (result.isConfirmed) {
+
+        await dispatch(startDeleteUser());
+        
+        Swal.fire(
+          'Eliminada!',
+          'Tu cuenta ha sido eliminada',
+          'success'
+        )
+      }
+
+    })
+  }
 
   const icons = [
     {icon : <LoginOutlined/> , text : 'salir' , clickEvent : () => dispatch(startLogout()) },
-    {icon : <PersonRemove/> , text : 'Eliminar cuenta' , clickEvent : () => {}},
+    {icon : <PersonRemove/> , text : 'Eliminar cuenta' , clickEvent : onStartDeleteUser},
     {icon : <Description/> , text : 'Mis notas' , clickEvent : onStartViewNotes  },
     {icon : <Create/> , text : '  Crear nueva nota' , clickEvent :  onStartNewNote },
   ]
@@ -164,6 +195,19 @@ export const MenuUser = (  {children} ) => {
                 ))
 
             }
+          <FormControlLabel 
+            control={
+              <Switch  
+                color='success' 
+                checked={darkMode}  
+              />}
+            
+            label='Dark mode' 
+            labelPlacement='end' 
+            onChange={()=> dispatch(onChangeDarkMode())}
+            sx={{color:'secondary.switch' , ml:1}}
+                          
+          />
         </List>
 
       </Drawer>

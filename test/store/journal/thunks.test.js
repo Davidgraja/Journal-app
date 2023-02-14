@@ -1,11 +1,11 @@
 import { collection, deleteDoc, doc, getDocs, setDoc } from "firebase/firestore/lite";
 import { FirebaseDB } from "../../../src/firebase/config";
 import { fileUpload } from "../../../src/helpers/fileUpload";
+import { firebaseClearDB } from "../../../src/helpers/firebaseClearDB";
 import { loadNotes } from "../../../src/helpers/loadNotes";
 
 import { addNewEmptyNote, deleteNoteById, savingNewNote, setActiveNote, setNotes, setPhotosToActiveNote, setSaving } from "../../../src/store/journal/journalSlice";
 import { startDeletingNote, startLoadingNotes, startNewNote, startUploadingFiles } from "../../../src/store/journal/thunks";
-import { firebaseClearDB } from "../../fixtures/firebaseClearDB";
 
 jest.mock("../../../src/helpers/loadNotes");
 jest.mock("../../../src/helpers/fileUpload");
