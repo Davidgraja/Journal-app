@@ -15,6 +15,3 @@ Journal app esta construido sobre varias tecnologias :
 - [Testing Library](https://testing-library.com/)
 
 Desde este  momento puedes hacer uso de jornal app : https://davidgp-journal-app.netlify.app
-
-# Nota importante
-Journal app  va a pasar por ciertos cambios estéticos  y mejoras  en la interación con sus usuarios ; Esto no quiere decir que tu informacion actual se vea afectada , tu informacion se mantendra intacta 
