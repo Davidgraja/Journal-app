@@ -1,9 +1,11 @@
-import { AuthRouter } from "./auth/router/AuthRouter"
+import { Navbar } from "./Journal/components"
+// import { AuthRouter } from "./auth/router/AuthRouter"
 
 const App = () => {
 
   return (
-      <AuthRouter/>
+      // <AuthRouter/>
+      <Navbar/>
   )
 }
 
