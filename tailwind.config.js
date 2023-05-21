@@ -8,6 +8,13 @@ export default {
     extend: {
       fontFamily:{
         Poppins :['Poppins', 'sans-serif']
+      },
+      gridTemplateColumns: {
+        'personalized' : 'repeat(3, minmax(80px , 300px))'
+      },
+
+      gridAutoColumns: {
+        'prueba' : '200px' 
       }
     },
   },
