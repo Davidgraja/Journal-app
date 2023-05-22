@@ -10,7 +10,8 @@ export default {
         Poppins :['Poppins', 'sans-serif']
       },
       gridTemplateColumns: {
-        'personalized' : 'repeat(3, minmax(80px , 300px))'
+        'personalized' : 'repeat(3, minmax(80px , 300px))',
+        'noteList' : 'repeat(auto-fill, minmax(100px , 300px))'
       },
 
       gridAutoColumns: {

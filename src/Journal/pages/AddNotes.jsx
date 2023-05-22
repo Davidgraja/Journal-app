@@ -1,11 +1,12 @@
 import { useRef } from "react"
 
 import { IconCloudUpload } from '@tabler/icons-react';
-import { Images, UploadImages } from "../components";
+import { Images } from "../components";
+import { UploadImages } from "../components/views/UploadImages";
 
 export const AddNotes = () => {
     const fileInputRef = useRef();
-    const note = new Date().toUTCString()
+    const note = new Date().toLocaleString()
     const imagesUrl = [];
 
     return (
