@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { SubNav } from "./SubNav"
+import { Link } from "react-router-dom";
 
 export const Navbar = () => {
     
@@ -9,8 +10,8 @@ export const Navbar = () => {
         <header>
             <nav className=" h-20 flex justify-end items-center px-5  border-b-2 md:justify-between">
                 <div className="hidden md:flex gap-x-4 items-center">
-                    <a href="" className=" px-1 sm:leading-none md:leading-[80px] hover:border-b hover:border-b-indigo-600">Mis apuntes</a>
-                    <a href="" className="px-1 sm:leading-none md:leading-[80px] hover:border-b hover:border-b-indigo-600"> Crear apunte</a>
+                    <Link to={'/'} className=" px-1 sm:leading-none md:leading-[80px] hover:border-b hover:border-b-indigo-600">Mis apuntes</Link>
+                    <Link to={'/addNote'} className="px-1 sm:leading-none md:leading-[80px] hover:border-b hover:border-b-indigo-600"> Crear apunte</Link>
                 </div>
 
                 <div className="flex gap-x-4 relative">

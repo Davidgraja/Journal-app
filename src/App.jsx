@@ -1,14 +1,10 @@
-// import { Navbar } from "./Journal/components"
-// import { AuthRouter } from "./auth/router/AuthRouter"
-
-import { Journal } from "./Journal/pages/Journal"
+import { AppRouter } from "./router/AppRouter"
 
 const App = () => {
 
   return (
-      // <AuthRouter/>
-      <Journal/>
-    )
+    <AppRouter/>
+  )
 }
 
 export default App
