@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-export const Form = ({ children , formTitle , textForLink , directionOfLink}) => {
+export const Form = ({ children , formTitle , textForLink , directionOfLink , onClickEvent}) => {
     return (
     <section className="h-full flex  place-content-center place-items-center">
         
@@ -8,7 +8,7 @@ export const Form = ({ children , formTitle , textForLink , directionOfLink}) =>
 
             <h1 className=" text-center text-2xl font-semibold">{ formTitle }</h1>
 
-            <form className=" mt-10 flex flex-col gap-y-5">
+            <form className=" mt-10 flex flex-col gap-y-5" onClick={ onClickEvent }>
 
                 {
                     children

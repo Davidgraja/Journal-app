@@ -1,4 +1,4 @@
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup, updateProfile } from 'firebase/auth'
 import { FirebaseAuth } from './config';
 
 const googleProvider = new  GoogleAuthProvider(); 
@@ -34,4 +34,26 @@ export const singInWidthGoogle = async () =>{
 
     }
 
+}
+
+
+export const registerUserWithEmailPassword = async ({email , password , name: displayName }) =>{
+    try {   
+        
+        const response = await createUserWithEmailAndPassword(FirebaseAuth ,  email ,  password);
+        const {uid , photoURL} = response.user;
+
+        //? : forma de Actualizar el displayName o la photoURL en Firebase
+
+        await updateProfile(FirebaseAuth.currentUser , { displayName }) //? forma de saber  cual es el usuario actual cuando se autentica un usuario usando Firebase
+        
+        return {
+            ok : true ,
+            uid , photoURL , email , displayName
+        }
+
+    } catch (error) {
+        if(error.message.includes('auth/email-already-in-use')) return { ok : false , errorMessage : 'El correo ingresado ya se encuentra en uso'}
+        return { ok : false , errorMessage : error.message}
+    }
 }
