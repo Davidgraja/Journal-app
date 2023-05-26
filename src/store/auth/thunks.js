@@ -1,4 +1,4 @@
-import { registerUserWithEmailPassword, singInWidthGoogle } from "../../firebase/providers";
+import { logoutFirebase, registerUserWithEmailPassword, singInWidthEmailAndPassword, singInWidthGoogle } from "../../firebase/providers";
 import { checkingCredentials, login, logout } from "./authSlice";
 
 /**  
@@ -20,6 +20,9 @@ export const startGoogleSingIn = () =>{
 }
 
 
+/**  
+ *  funcion que inicia la authenticación  email y password
+ */
 export const startCreatingUserEmailAndPasword = ({email , password , name}) => {
     return async (dispatch) =>{
         
@@ -29,6 +32,27 @@ export const startCreatingUserEmailAndPasword = ({email , password , name}) => {
         if(!result.ok) return dispatch(logout(result));
         
         dispatch(login(result));
+
+    }
+}
+
+export const startEmailAndPasswordSingIn = ({email , password}) => {
+    return async ( dispatch ) => {
+        dispatch(checkingCredentials());
+
+        const result = await singInWidthEmailAndPassword({email , password});
+        if(!result.ok) return dispatch(logout(result));
+        
+        dispatch(login(result))
+    }
+}
+
+export const startLogout = () => {
+    return async ( dispatch ) => {
+        
+        await logoutFirebase();
+        dispatch( logout())
+
 
     }
 }

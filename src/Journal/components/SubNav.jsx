@@ -1,6 +1,10 @@
+import { useDispatch } from "react-redux"
+import { startLogout } from "../../store/auth/thunks"
 import { Li } from "./Li"
+import { Link } from "react-router-dom"
 
 export const SubNav = () => {
+    const dispatch = useDispatch()
     return (
         <ul className=" absolute p-2 right-0 top-11 rounded bg-white border-2  w-44 flex flex-col gap-y-2">
 
@@ -8,17 +12,17 @@ export const SubNav = () => {
             
             <hr />
             
-            <Li> Logout </Li>
+            <Li eventClick={()=> dispatch(startLogout())}> Logout </Li>
             <Li> Eliminar cuenta </Li>
             
             <hr className=" block md:hidden" />
             
             <Li addClass={'md:hidden'}>
-                <a href="#"> Mis apuntes </a> 
+                <Link to='/' > Mis puntes </Link> 
             </Li>
             
             <Li addClass={'md:hidden'}>
-                <a href="#"> Crear apunte </a>
+                <Link to="addNote" > Crear apunte </Link>
             </Li>
 
         </ul>

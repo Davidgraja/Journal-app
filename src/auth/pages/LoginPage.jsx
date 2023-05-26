@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux"
 import { ButtonForm, Form, InputForm, MessageError } from "../components"
-import { startGoogleSingIn } from "../../store/auth/thunks";
+import { startEmailAndPasswordSingIn, startGoogleSingIn } from "../../store/auth/thunks";
 import { useForm } from "../../hooks/useForm";
 
 export const LoginPage = () => {
@@ -16,11 +16,7 @@ export const LoginPage = () => {
         email: '',
         password : ''
     }
-    const {email , password , onEventInput} = useForm(formData ,)
-    
-    
-
-    
+    const {email , password , onEventInput} = useForm(formData ,);
 
     //* Functions 
     const onGoggleSingIn = () =>{
@@ -32,6 +28,7 @@ export const LoginPage = () => {
     const  onSubmitForm = (event) => {
         event.preventDefault();
         if(!email || !password) return;
+        dispatch(startEmailAndPasswordSingIn({email , password}))
     }
 
     return (

@@ -1,4 +1,4 @@
-import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup, updateProfile } from 'firebase/auth'
+import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithPopup, updateProfile } from 'firebase/auth'
 import { FirebaseAuth } from './config';
 
 const googleProvider = new  GoogleAuthProvider(); 
@@ -36,6 +36,9 @@ export const singInWidthGoogle = async () =>{
 
 }
 
+/**
+ * Función que permite el registro de usuario con email y password
+ */
 
 export const registerUserWithEmailPassword = async ({email , password , name: displayName }) =>{
     try {   
@@ -56,4 +59,39 @@ export const registerUserWithEmailPassword = async ({email , password , name: di
         if(error.message.includes('auth/email-already-in-use')) return { ok : false , errorMessage : 'El correo ingresado ya se encuentra en uso'}
         return { ok : false , errorMessage : error.message}
     }
+}
+
+
+export const singInWidthEmailAndPassword = async ({email , password}) => {
+    try {
+        const response = await signInWithEmailAndPassword(FirebaseAuth , email , password );
+        const {displayName , photoURL , uid } = response.user;
+        return {
+            ok : true,
+            displayName , photoURL , uid , email
+
+        }
+    } catch (error) {
+        
+        let errorMessage ; 
+
+        if(error.message.includes('auth/wrong-password')) errorMessage = 'La contraseña ingresada no ha sido encontrada , por favor veriquela'
+        else if (error.message.includes('auth/user-not-found')) errorMessage = 'El correo  ingresado no ha sido encontrado, por favor verifiquelo'
+        else if (error.message.includes('auth/too-many-requests')) errorMessage = 'El acceso a esta cuenta se ha inhabilitado temporalmente debido a muchos intentos fallidos de inicio de sesión. Puede restaurarlo inmediatamente restableciendo su contraseña o puede volver a intentarlo más tarde.'
+        else errorMessage  = 'Lo sentimos a ocurrido un error , intentelo mas tarde '
+
+        return {
+            ok: false ,
+            errorMessage 
+        }
+
+    }
+}
+
+export const logoutFirebase = async () =>{
+
+    //? singOut de firebase cierra todos  proveedores , google , facebook , etc.
+    
+    return await FirebaseAuth.signOut()
+    
 }
