@@ -1,9 +1,13 @@
 import { useState } from "react"
 import { SubNav } from "./SubNav"
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+
+import { IconUserCircle } from '@tabler/icons-react';
 
 export const Navbar = () => {
-    
+    // Redux
+    const {photoURL} = useSelector( state => state.auth );
     const [showSubNavbar, setShowSubNavbar] = useState(false);
 
     return (
@@ -16,8 +20,13 @@ export const Navbar = () => {
 
                 <div className="flex gap-x-4 relative">
 
-                    <span className=" w-16 hover:cursor-pointer" onClick={ ()=> setShowSubNavbar( !showSubNavbar ) }>
-                        <img  src="https://cdn.dribbble.com/users/2522374/screenshots/7911727/google-logo.png" alt=" imagen de google"  width={'100%'}height={'100%'}/>
+                    <span className=" w-12 hover:cursor-pointer" onClick={ ()=> setShowSubNavbar( !showSubNavbar ) }>
+                        {
+                            photoURL ? 
+                            <img className="rounded"  src={photoURL} alt=" imagen de google "  width={'100%'} height={'100%'}/> 
+                            :
+                            <IconUserCircle className="text-gray-400 rounded" stroke={2} size={40} />
+                        }
                     </span>
 
                     {

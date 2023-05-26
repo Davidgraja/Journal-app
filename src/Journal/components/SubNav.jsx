@@ -1,14 +1,18 @@
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { startLogout } from "../../store/auth/thunks"
 import { Li } from "./Li"
 import { Link } from "react-router-dom"
 
 export const SubNav = () => {
+    
+    //Redux 
+    const {displayName} = useSelector( state => state.auth )
     const dispatch = useDispatch()
+    
     return (
         <ul className=" absolute p-2 right-0 top-11 rounded bg-white border-2  w-44 flex flex-col gap-y-2">
 
-            <li className="p-2">David grajales</li>
+            <li className="p-2">{ displayName }</li>
             
             <hr />
             
