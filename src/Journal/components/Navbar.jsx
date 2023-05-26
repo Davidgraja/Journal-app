@@ -1,15 +1,32 @@
 import { useState } from "react"
 import { SubNav } from "./SubNav"
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { IconUserCircle } from '@tabler/icons-react';
+import { setActiveNote } from "../../store/journal";
 
 export const Navbar = () => {
-    // Redux
+    //* Redux
     const {photoURL} = useSelector( state => state.auth );
     const {message} = useSelector( state => state.journal );
+    const dispatch = useDispatch();
+
+    //* Hooks
     const [showSubNavbar, setShowSubNavbar] = useState(false);
+
+    const startCreateNote = () =>{
+        console.log('evento')
+
+        const basicNote = {
+            title : '',
+            body : '',
+            imageUrl : [],
+            date : new Date().toLocaleString()
+        }
+
+        dispatch(setActiveNote(basicNote))
+    }
 
     return (
         <header className="relative">
@@ -22,7 +39,7 @@ export const Navbar = () => {
                 
                 <div className="hidden md:flex gap-x-4 items-center">
                     <Link to={'/'} className=" px-1 sm:leading-none md:leading-[80px] hover:border-b hover:border-b-indigo-600">Mis apuntes</Link>
-                    <Link to={'/addNote'} className="px-1 sm:leading-none md:leading-[80px] hover:border-b hover:border-b-indigo-600"> Crear apunte</Link>
+                    <Link to={'/addNote'} className="px-1 sm:leading-none md:leading-[80px] hover:border-b hover:border-b-indigo-600" onClick={startCreateNote} > Crear apunte</Link>
                 </div>
 
                 <div className="flex gap-x-4 relative">

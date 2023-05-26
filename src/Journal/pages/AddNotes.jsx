@@ -1,45 +1,62 @@
-import { useMemo, useRef } from "react"
+import { useEffect, useMemo, useRef , useState } from "react"
 
 import { IconCloudUpload } from '@tabler/icons-react';
 import { Images, Navbar } from "../components";
 import { UploadImages } from "../components/views/UploadImages";
 import { useForm } from "../../hooks/useForm";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-import { startNewNote, updateMessageSave } from "../../store/journal";
-import { useNavigate } from "react-router-dom";
+import { setActiveNote, startNewNote, startUploadingFiles, updateMessageSave } from "../../store/journal";
+// import { useNavigate } from "react-router-dom";
 
 export const AddNotes = () => {
     const fileInputRef = useRef();
     const date = useMemo( () => new Date().toLocaleString() , [] )
-    const imagesUrl = [];
     
     //* Redux 
+    const { active } = useSelector(state => state.journal )
     const dispatch = useDispatch();
-
+    
     //* hooks
+    const  [files, setfiles] = useState([]);
+
     const noteForm  ={
         title : '',
         body : '',
 
     }
 
-    const {title , body , onEventInput} = useForm(noteForm);
+    const {title , body , onEventInput , formState} = useForm(noteForm);
 
 
-    const navigate = useNavigate();
+    useEffect(() => {
+        dispatch(setActiveNote({...active , ...formState , imageUrl: files , date}));
+    }, [formState])
+
+
+
+    // const navigate = useNavigate();
 
     //* Functions 
-    const onSaveNote = () =>{
-        dispatch(startNewNote({title , body, imagesUrl , date}))
+    const onSaveNote = async () =>{
+        await dispatch(  startUploadingFiles(files));
+        dispatch(startNewNote());
+        
 
-        navigate('/')
+        //  navigate('/')
         
         setTimeout(()=>{
-            dispatch(updateMessageSave(null))
+            dispatch(updateMessageSave(null));
         },5000)
+        setfiles([])
         
     }
+
+    const onFileInputChange = ({target}) =>{
+        if(target.files === 0) return ;
+        setfiles( target.files)
+    } 
+
     return (
         <>
             <Navbar/>
@@ -50,9 +67,9 @@ export const AddNotes = () => {
                     
                     <section  className="flex justify-between gap-x-4 ">
                             
-                        <input className=" hidden" type="file" ref={fileInputRef}/>
+                        <input className=" hidden" type="file" ref={fileInputRef} multiple onChange={onFileInputChange}/>
                         
-                        <span title="Subir imagen">
+                        <span title="Subir imagen"  onClick={()=> fileInputRef.current.click() }>
                             <IconCloudUpload  className=' rounded p-1 hover:cursor-pointer hover:bg-indigo-600 hover:text-white' size={'34px'} />
                         </span>
 
@@ -76,8 +93,10 @@ export const AddNotes = () => {
                     <h1 className=" border-b-2 border-indigo-600  inline-block pb-1" >Tus imagenes</h1>
 
                     {
-                        imagesUrl.length == 0 ?  <UploadImages/> : <Images urls={ imagesUrl }/> 
-                    }
+                        files.length > 0 ?  <p className="text-center p-2"> Por Favor guarde los cambios para ver las imagenes cargadas - archivos { files.length}</p> : 
+                        active?.imageUrl?.length > 0 ? <Images urls={ active?.imageUrl }/>  : <UploadImages/>
+
+                    } 
 
                 </section>
 
