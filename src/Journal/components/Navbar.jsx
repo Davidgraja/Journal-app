@@ -8,11 +8,18 @@ import { IconUserCircle } from '@tabler/icons-react';
 export const Navbar = () => {
     // Redux
     const {photoURL} = useSelector( state => state.auth );
+    const {message} = useSelector( state => state.journal );
     const [showSubNavbar, setShowSubNavbar] = useState(false);
 
     return (
-        <header>
+        <header className="relative">
+
             <nav className=" h-20 flex justify-end items-center px-5  border-b-2 md:justify-between">
+
+                {
+                    message &&  <p className="bg-green-400 text-white rounded absolute  left-3 p-2 m-2 md:left-1/2" > {message}</p>
+                }
+                
                 <div className="hidden md:flex gap-x-4 items-center">
                     <Link to={'/'} className=" px-1 sm:leading-none md:leading-[80px] hover:border-b hover:border-b-indigo-600">Mis apuntes</Link>
                     <Link to={'/addNote'} className="px-1 sm:leading-none md:leading-[80px] hover:border-b hover:border-b-indigo-600"> Crear apunte</Link>
