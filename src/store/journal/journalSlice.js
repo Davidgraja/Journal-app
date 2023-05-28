@@ -50,7 +50,7 @@ export const journalSlice = createSlice({
                 return note;
             } );
 
-            state.message = { type: 'update' };
+            state.message =  'Nota actualizada' ;
         } ,
 
         setPhotosToActiveNote : (state , action) =>{

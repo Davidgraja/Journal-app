@@ -16,7 +16,6 @@ export const Navbar = () => {
     const [showSubNavbar, setShowSubNavbar] = useState(false);
 
     const startCreateNote = () =>{
-        console.log('evento')
 
         const basicNote = {
             title : '',
@@ -25,7 +24,11 @@ export const Navbar = () => {
             date : new Date().toLocaleString()
         }
 
-        dispatch(setActiveNote(basicNote))
+        dispatch(setActiveNote(basicNote));
+    }
+
+    const onViewNotes = () => {
+        dispatch(setActiveNote(null));
     }
 
     return (
@@ -38,7 +41,7 @@ export const Navbar = () => {
                 }
                 
                 <div className="hidden md:flex gap-x-4 items-center">
-                    <Link to={'/'} className=" px-1 sm:leading-none md:leading-[80px] hover:border-b hover:border-b-indigo-600">Mis apuntes</Link>
+                    <Link to={'/'} className=" px-1 sm:leading-none md:leading-[80px] hover:border-b hover:border-b-indigo-600" onClick={ onViewNotes }>Mis apuntes</Link>
                     <Link to={'/addNote'} className="px-1 sm:leading-none md:leading-[80px] hover:border-b hover:border-b-indigo-600" onClick={startCreateNote} > Crear apunte</Link>
                 </div>
 

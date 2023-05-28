@@ -1,6 +1,6 @@
 import { FirebaseDB } from "../../firebase/config";
 import { fileUpload } from "../../helpers/fileUpload";
-import { addNewEmptyNote, savingNewNote, setPhotosToActiveNote, updateMessageSave } from "./journalSlice";
+import { addNewEmptyNote, savingNewNote, setActiveNote, setPhotosToActiveNote, updateMessageSave, updateNote } from "./journalSlice";
 import {doc ,  collection , setDoc} from 'firebase/firestore/lite'
 
 export const startNewNote = () =>{
@@ -29,6 +29,7 @@ export const startNewNote = () =>{
         //? añadiendo id a a la nota creada  
         newNote.id = refDoc.id;
 
+        dispatch(setActiveNote(newNote));
         dispatch(addNewEmptyNote(newNote));
         dispatch(updateMessageSave('Apunte añadido con exito'));
     }
@@ -46,5 +47,22 @@ export const startUploadingFiles = ( files = [] ) =>{
         
         const photosUrl =  await Promise.all(filesUploadPromises);
         dispatch( setPhotosToActiveNote(photosUrl) );
+    }
+}
+
+export const startUpdateNote = () => {
+    return async ( dispatch , getState ) => {
+        dispatch(savingNewNote());
+
+        const { uid } = getState().auth;
+        const { active : activeNote } = getState().journal;
+
+        const noteToFireStore = { ...activeNote };
+        delete noteToFireStore.id;
+
+        const refDoc = doc(FirebaseDB,`Journal-app/${ uid }/notes/${ activeNote.id }`)
+        await setDoc(refDoc,noteToFireStore,{merge:true});
+
+        dispatch(updateNote(activeNote))
     }
 }

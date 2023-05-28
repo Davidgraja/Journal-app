@@ -6,7 +6,7 @@ import { UploadImages } from "../components/views/UploadImages";
 import { useForm } from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setActiveNote, startNewNote, startUploadingFiles, updateMessageSave } from "../../store/journal";
+import { setActiveNote, startNewNote, startUpdateNote, startUploadingFiles, updateMessageSave } from "../../store/journal";
 // import { useNavigate } from "react-router-dom";
 
 export const AddNotes = () => {
@@ -28,34 +28,50 @@ export const AddNotes = () => {
 
     const {title , body , onEventInput , formState} = useForm(noteForm);
 
-
+    //! solucionar problema de remplazo de url de las imagenes al actualizar el state cuando se modifica el formState 
     useEffect(() => {
         dispatch(setActiveNote({...active , ...formState , imageUrl: files , date}));
     }, [formState])
 
 
-
     // const navigate = useNavigate();
 
     //* Functions 
+
+
     const onSaveNote = async () =>{
         await dispatch(  startUploadingFiles(files));
         dispatch(startNewNote());
         
 
-        //  navigate('/')
+        // navigate('/');
+        // dispatch(setActiveNote(null));
         
         setTimeout(()=>{
             dispatch(updateMessageSave(null));
         },5000)
-        setfiles([])
-        
+
+        setfiles([]);
+    }
+
+    const onUpdateNote = async () => {
+        await dispatch(  startUploadingFiles(files));
+        dispatch(startUpdateNote());
+
+        setTimeout(()=>{
+            dispatch(updateMessageSave(null));
+        },5000)
+
+
+        setfiles([]);
+
     }
 
     const onFileInputChange = ({target}) =>{
         if(target.files === 0) return ;
         setfiles( target.files)
     } 
+
 
     return (
         <>
@@ -73,8 +89,12 @@ export const AddNotes = () => {
                             <IconCloudUpload  className=' rounded p-1 hover:cursor-pointer hover:bg-indigo-600 hover:text-white' size={'34px'} />
                         </span>
 
-                        <button className="p-1 rounded hover:bg-indigo-600 hover:text-white" onClick={onSaveNote}  >Guardar</button>
-
+                        {
+                            active?.id ? 
+                            <button className="p-1 rounded hover:bg-indigo-600 hover:text-white" onClick={onUpdateNote} >Actualizar</button> 
+                            : 
+                            <button className="p-1 rounded hover:bg-indigo-600 hover:text-white" onClick={onSaveNote}  >Guardar</button>
+                        }
 
                     </section>
 
@@ -94,7 +114,7 @@ export const AddNotes = () => {
 
                     {
                         files.length > 0 ?  <p className="text-center p-2"> Por Favor guarde los cambios para ver las imagenes cargadas - archivos { files.length}</p> : 
-                        active?.imageUrl?.length > 0 ? <Images urls={ active?.imageUrl }/>  : <UploadImages/>
+                        active?.imageUrl?.length > 0 ? <Images urls={ active?.imageUrl }/>  : <UploadImages eventOnChange={ onFileInputChange }/>
 
                     } 
 
