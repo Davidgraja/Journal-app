@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { SubNav } from "./SubNav"
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,18 +15,11 @@ export const Navbar = () => {
     //* Hooks
     const [showSubNavbar, setShowSubNavbar] = useState(false);
 
-    const startCreateNote = () =>{
-
-        const basicNote = {
-            title : '',
-            body : '',
-            imageUrl : [],
-            date : new Date().toLocaleString()
-        }
-
-        dispatch(setActiveNote(basicNote));
-    }
-
+    useEffect(() => {
+        onViewNotes()
+    }, [])
+    
+    //* Functions
     const onViewNotes = () => {
         dispatch(setActiveNote(null));
     }
@@ -42,7 +35,7 @@ export const Navbar = () => {
                 
                 <div className="hidden md:flex gap-x-4 items-center">
                     <Link to={'/'} className=" px-1 sm:leading-none md:leading-[80px] hover:border-b hover:border-b-indigo-600" onClick={ onViewNotes }>Mis apuntes</Link>
-                    <Link to={'/addNote'} className="px-1 sm:leading-none md:leading-[80px] hover:border-b hover:border-b-indigo-600" onClick={startCreateNote} > Crear apunte</Link>
+                    <Link to={'/addNote'} className="px-1 sm:leading-none md:leading-[80px] hover:border-b hover:border-b-indigo-600" > Crear apunte</Link>
                 </div>
 
                 <div className="flex gap-x-4 relative">

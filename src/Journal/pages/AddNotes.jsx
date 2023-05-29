@@ -7,7 +7,7 @@ import { useForm } from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
 
 import { setActiveNote, startNewNote, startUpdateNote, startUploadingFiles, updateMessageSave } from "../../store/journal";
-// import { useNavigate } from "react-router-dom";
+
 
 export const AddNotes = () => {
     const fileInputRef = useRef();
@@ -23,29 +23,26 @@ export const AddNotes = () => {
     const noteForm  ={
         title : '',
         body : '',
-
     }
 
     const {title , body , onEventInput , formState} = useForm(noteForm);
 
-    //! solucionar problema de remplazo de url de las imagenes al actualizar el state cuando se modifica el formState 
     useEffect(() => {
-        dispatch(setActiveNote({...active , ...formState , imageUrl: files , date}));
+        dispatch(setActiveNote({...active , ...formState}))
     }, [formState])
-
-
-    // const navigate = useNavigate();
-
+    
     //* Functions 
+    const onSaveNote = () =>{
+        dispatch(setActiveNote({
+            title,
+            body ,
+            imageUrl : files,
+            date
+        }))
 
-
-    const onSaveNote = async () =>{
-        await dispatch(  startUploadingFiles(files));
+        dispatch(startUploadingFiles(files));
         dispatch(startNewNote());
         
-
-        // navigate('/');
-        // dispatch(setActiveNote(null));
         
         setTimeout(()=>{
             dispatch(updateMessageSave(null));
@@ -61,8 +58,7 @@ export const AddNotes = () => {
         setTimeout(()=>{
             dispatch(updateMessageSave(null));
         },5000)
-
-
+        
         setfiles([]);
 
     }

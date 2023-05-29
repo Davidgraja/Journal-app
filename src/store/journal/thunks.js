@@ -36,10 +36,7 @@ export const startNewNote = () =>{
 }
 
 export const startUploadingFiles = ( files = [] ) =>{
-    return async (dispatch) =>{
-        // dispatch(setSaving());
-
-        console.log(files)
+    return async (dispatch) =>{        
         const filesUploadPromises = [];
         for (const file of files) {
             filesUploadPromises.push(fileUpload(file));
