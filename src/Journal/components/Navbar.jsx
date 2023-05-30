@@ -24,6 +24,17 @@ export const Navbar = () => {
         dispatch(setActiveNote(null));
     }
 
+    const onCreateNote = () =>{
+        const basicNote ={
+            title : '',
+            body : '',
+            imageUrl : [],
+            date : new Date().toLocaleString()
+            
+        }
+
+        dispatch(setActiveNote(basicNote))
+    }
     return (
         <header className="relative">
 
@@ -35,7 +46,7 @@ export const Navbar = () => {
                 
                 <div className="hidden md:flex gap-x-4 items-center">
                     <Link to={'/'} className=" px-1 sm:leading-none md:leading-[80px] hover:border-b hover:border-b-indigo-600" onClick={ onViewNotes }>Mis apuntes</Link>
-                    <Link to={'/addNote'} className="px-1 sm:leading-none md:leading-[80px] hover:border-b hover:border-b-indigo-600" > Crear apunte</Link>
+                    <Link to={'/addNote'} className="px-1 sm:leading-none md:leading-[80px] hover:border-b hover:border-b-indigo-600" onClick={ onCreateNote } > Crear apunte</Link>
                 </div>
 
                 <div className="flex gap-x-4 relative">

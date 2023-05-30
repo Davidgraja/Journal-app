@@ -10,6 +10,8 @@ import { setActiveNote, startNewNote, startUpdateNote, startUploadingFiles, upda
 
 
 export const AddNotes = () => {
+
+    //! solucionar problema de actualizacion en los inputs  a  la hora de crear una nota nota
     const fileInputRef = useRef();
     const date = useMemo( () => new Date().toLocaleString() , [] )
     
@@ -21,15 +23,18 @@ export const AddNotes = () => {
     const  [files, setfiles] = useState([]);
 
     const noteForm  ={
-        title : '',
-        body : '',
+        title : active?.title,
+        body : active?.body,
     }
 
-    const {title , body , onEventInput , formState} = useForm(noteForm);
+    const {title , body , onEventInput , formState} = useForm(noteForm)
 
     useEffect(() => {
-        dispatch(setActiveNote({...active , ...formState}))
+        if(active) dispatch(setActiveNote({...active , ...formState  }))
+        else dispatch(setActiveNote({...active , ...formState , date }))
     }, [formState])
+
+
     
     //* Functions 
     const onSaveNote = () =>{
@@ -75,7 +80,7 @@ export const AddNotes = () => {
             <section className=" p-5   xl:w-11/12 xl:mx-auto 2xl:w-8/12">
                 <div className="p-2 flex gap-x-2 justify-between items-center">
 
-                    <p>{ date }</p>
+                    <p>{ active?.date }</p>
                     
                     <section  className="flex justify-between gap-x-4 ">
                             
