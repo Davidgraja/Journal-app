@@ -6,8 +6,12 @@ export const useForm = ( states = {}  , formValidations = {} ) => {
     const [ formValidation, setFormValidation ] = useState({})
 
     useEffect(() => {
-        createValidators()
+        setFormState(states)
+    }, [states])
     
+
+    useEffect(() => {
+        createValidators();
     }, [formState])
     
 
@@ -47,11 +51,16 @@ export const useForm = ( states = {}  , formValidations = {} ) => {
         setFormValidation(formCheckedValue);
     }
 
+    const onChangeState = () =>{
+        setFormState( states)
+    }
+
     return {
         ...formState,
         formState,
         onEventInput,
         onResetForm,
+        onChangeState,
 
         ...formValidation,
         isFormValid

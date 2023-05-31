@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { ButtonForm, Form, InputForm, MessageError } from "../components"
 import { startEmailAndPasswordSingIn, startGoogleSingIn } from "../../store/auth/thunks";
 import { useForm } from "../../hooks/useForm";
+import { useState } from "react";
 
 export const LoginPage = () => {
 
@@ -12,11 +13,12 @@ export const LoginPage = () => {
 
     
     //* hooks 
-    const formData = {
-        email: '',
+    const [formData, setFormDate] = useState({
+        email : '',
         password : ''
-    }
-    const {email , password , onEventInput} = useForm(formData ,);
+    });
+    
+    const {email , password , onEventInput} = useForm(formData);
 
     //* Functions 
     const onGoggleSingIn = () =>{

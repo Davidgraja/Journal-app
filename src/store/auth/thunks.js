@@ -13,6 +13,8 @@ export const startGoogleSingIn = () =>{
         const result =  await singInWidthGoogle();
         if(!result.ok) return dispatch(logout( result));
 
+        console.log(result)
+
         dispatch(login( result ));
     
     }

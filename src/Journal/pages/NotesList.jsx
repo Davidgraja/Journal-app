@@ -2,7 +2,6 @@ import { useSelector } from "react-redux";
 import { NoteCard } from "../components/NoteCard"
 
 export const NotesList = () => {
-    // const date = new Date().toLocaleString();
 
     const {notes} = useSelector( state => state.journal );
     

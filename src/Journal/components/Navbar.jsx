@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { SubNav } from "./SubNav"
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,12 +14,8 @@ export const Navbar = () => {
 
     //* Hooks
     const [showSubNavbar, setShowSubNavbar] = useState(false);
-
-    useEffect(() => {
-        onViewNotes()
-    }, [])
     
-    //* Functions
+    // //* Functions
     const onViewNotes = () => {
         dispatch(setActiveNote(null));
     }

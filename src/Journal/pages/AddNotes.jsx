@@ -11,7 +11,6 @@ import { setActiveNote, startNewNote, startUpdateNote, startUploadingFiles, upda
 
 export const AddNotes = () => {
 
-    //! solucionar problema de actualizacion en los inputs  a  la hora de crear una nota nota
     const fileInputRef = useRef();
     const date = useMemo( () => new Date().toLocaleString() , [] )
     
@@ -22,18 +21,28 @@ export const AddNotes = () => {
     //* hooks
     const  [files, setfiles] = useState([]);
 
-    const noteForm  ={
-        title : active?.title,
-        body : active?.body,
-    }
+    const [noteForm, setNoteForm] = useState({
+        title  : active?.title ,
+        body : active?.body
+    });
 
-    const {title , body , onEventInput , formState} = useForm(noteForm)
+    const {title , body , onEventInput , formState } = useForm(noteForm)
 
     useEffect(() => {
-        if(active) dispatch(setActiveNote({...active , ...formState  }))
+        
+        if(active){
+            dispatch(setActiveNote({...active , title , body }))
+        }
         else dispatch(setActiveNote({...active , ...formState , date }))
-    }, [formState])
+    }, [title , body])
 
+    useEffect(() => {
+        setNoteForm({ 
+            title  : active?.title ,
+            body : active?.body
+        })
+    }, [active])
+    
 
     
     //* Functions 
@@ -62,7 +71,7 @@ export const AddNotes = () => {
 
         setTimeout(()=>{
             dispatch(updateMessageSave(null));
-        },5000)
+        },5000);
         
         setfiles([]);
 
