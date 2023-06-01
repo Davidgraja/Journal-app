@@ -7,7 +7,7 @@ export const NoteCard = ({...note}) => {
     const dispatch = useDispatch();
     
     const onActiveNote = () =>{
-        dispatch(setActiveNote(note))
+        dispatch(setActiveNote(note));
         navigate('/addNote');
     }
 

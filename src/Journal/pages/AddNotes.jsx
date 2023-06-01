@@ -17,7 +17,7 @@ export const AddNotes = () => {
     //* Redux 
     const { active } = useSelector(state => state.journal )
     const dispatch = useDispatch();
-    
+
     //* hooks
     const  [files, setfiles] = useState([]);
 
@@ -124,7 +124,7 @@ export const AddNotes = () => {
 
                     {
                         files.length > 0 ?  <p className="text-center p-2"> Por Favor guarde los cambios para ver las imagenes cargadas - archivos { files.length}</p> : 
-                        active?.imageUrl?.length > 0 ? <Images urls={ active?.imageUrl }/>  : <UploadImages eventOnChange={ onFileInputChange }/>
+                        active?.imageUrl?.length > 0 ? <Images />  : <UploadImages eventOnChange={ onFileInputChange }/>
 
                     } 
 
