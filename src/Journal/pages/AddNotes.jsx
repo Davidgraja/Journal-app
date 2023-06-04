@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef , useState } from "react"
+import { useEffect , useRef , useState } from "react"
 
 import { IconCloudUpload } from '@tabler/icons-react';
 import { Images, Navbar } from "../components";
@@ -7,36 +7,39 @@ import { useForm } from "../../hooks/useForm";
 import { useDispatch, useSelector } from "react-redux";
 
 import { setActiveNote, startNewNote, startUpdateNote, startUploadingFiles, updateMessageSave } from "../../store/journal";
+import { useNavigate } from "react-router-dom";
 
 
 export const AddNotes = () => {
-
-    const fileInputRef = useRef();
-    const date = useMemo( () => new Date().toLocaleString() , [] )
     
     //* Redux 
-    const { active } = useSelector(state => state.journal )
+    const { active } = useSelector(state => state.journal );
     const dispatch = useDispatch();
-
+    
     //* hooks
     const  [files, setfiles] = useState([]);
+    
+    const fileInputRef = useRef();    
+
+    const navigate = useNavigate();
 
     const [noteForm, setNoteForm] = useState({
         title  : active?.title ,
         body : active?.body
     });
 
-    const {title , body , onEventInput , formState } = useForm(noteForm)
+    const {title , body , onEventInput  } = useForm(noteForm)
 
     useEffect(() => {
         
         if(active){
             dispatch(setActiveNote({...active , title , body }))
         }
-        else dispatch(setActiveNote({...active , ...formState , date }))
     }, [title , body])
 
     useEffect(() => {
+
+        if(!active) navigate('/')
         setNoteForm({ 
             title  : active?.title ,
             body : active?.body
@@ -46,10 +49,12 @@ export const AddNotes = () => {
 
     
     //* Functions 
-    const onSaveNote = () =>{
-        
-        dispatch(startUploadingFiles(files));
+    const onSaveNote = async () =>{
+
+        await dispatch(startUploadingFiles(files));
         dispatch(startNewNote());
+
+        dispatch(updateMessageSave('Apunte añadido con exito'));
 
         setTimeout(()=>{
             dispatch(updateMessageSave(null));
@@ -61,6 +66,7 @@ export const AddNotes = () => {
     const onUpdateNote = async () => {
         await dispatch(  startUploadingFiles(files));
         dispatch(startUpdateNote());
+        dispatch(updateMessageSave('Nota actualizada'));
 
         setTimeout(()=>{
             dispatch(updateMessageSave(null));

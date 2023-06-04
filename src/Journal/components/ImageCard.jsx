@@ -1,6 +1,7 @@
 import { IconTrash , IconExternalLink } from '@tabler/icons-react';
 import { useDispatch } from 'react-redux';
-import { startDeletePhoto } from '../../store/journal/thunks';
+import { startDeletePhoto, startUpdateNote } from '../../store/journal/thunks';
+import { updateMessageSave, updatePhotos } from '../../store/journal/journalSlice';
 
 export const ImageCard = ({url}) => {
     
@@ -11,8 +12,16 @@ export const ImageCard = ({url}) => {
         const separator  = url.split('/');
         const  indexId = separator[separator.length - 1].split('.'); 
         const id = indexId[0];
-        dispatch(startDeletePhoto(id))
+        
+        dispatch(startDeletePhoto(id));
+        dispatch(updatePhotos(url));
+        dispatch(startUpdateNote())
+
+        setTimeout(() => {
+            dispatch(updateMessageSave(null));
+        }, 5000);
     }
+    
     return (
         <div >
             <section className="  flex items-center justify-evenly mb-1">

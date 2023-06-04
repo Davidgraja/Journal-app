@@ -1,4 +1,5 @@
 import { FirebaseDB } from "../../firebase/config";
+import { deletePhoto } from "../../helpers/deletePhoto";
 import { fileUpload } from "../../helpers/fileUpload";
 import { loadNotes } from "../../helpers/loadNotes";
 import { addNewEmptyNote, deleteNoteById, savingNewNote, setActiveNote, setNotes, setPhotosToActiveNote, updateMessageSave, updateNote } from "./journalSlice";
@@ -32,7 +33,7 @@ export const startNewNote = () =>{
 
         dispatch(setActiveNote(newNote));
         dispatch(addNewEmptyNote(newNote));
-        dispatch(updateMessageSave('Apunte añadido con exito'));
+        
     }
 }
 
@@ -85,6 +86,16 @@ export const startDeletingNote = () =>{
         const {uid} = getState().auth;
         const {active : activeNote} = getState().journal;
 
+        const notesIds = [];
+        activeNote.imageUrl.forEach( img => {
+            const separator  = img.split('/');
+            const  indexId = separator[separator.length - 1].split('.'); 
+            const id = indexId[0];
+            notesIds.push(deletePhoto(id))
+        })
+
+        await Promise.all(notesIds)
+
         const docRef = doc(FirebaseDB , `/Journal-app/${uid}/notes/${activeNote.id}`);
         await deleteDoc(docRef);     
 
@@ -94,16 +105,14 @@ export const startDeletingNote = () =>{
 
 // ? implementar la peticion de eliminacion de la imagen
 export const startDeletePhoto = ( id ) =>{
-    return async () => {    
-        const response = await fetch(`http://localhost:8080/api/cloudinary?id=${id}&folder=journal-app&typeResource=image`,{
-            method : "DELETE",
-            mode :"cors",
-            headers : {
-                "Content-Type": "application/json"
-            },
-            credentials :"omit"
-        });
-        console.log(response)
+    return async (dispatch) => {    
+        const { ok , message} = await  deletePhoto(id);
+        
+        if(!ok){
+            dispatch(updateMessageSave(`Ha ocurrido un error , ${message} `))
+        }
+
+        dispatch(updateMessageSave(message))
         
     }
 }
