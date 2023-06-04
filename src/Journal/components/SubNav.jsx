@@ -3,11 +3,12 @@ import { startLogout } from "../../store/auth/thunks"
 import { Li } from "./Li"
 import { Link } from "react-router-dom"
 
-export const SubNav = () => {
+export const SubNav = ({eventAddNote}) => {
     
     //Redux 
     const {displayName} = useSelector( state => state.auth )
     const dispatch = useDispatch()
+
     
     return (
         <ul className=" absolute p-2 right-0 top-11 rounded bg-white border-2  w-44 flex flex-col gap-y-2">
@@ -26,7 +27,7 @@ export const SubNav = () => {
             </Li>
             
             <Li addClass={'md:hidden'}>
-                <Link to="addNote" > Crear apunte </Link>
+                <Link to="addNote"  onClick={eventAddNote}> Crear apunte </Link>
             </Li>
 
         </ul>

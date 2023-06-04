@@ -57,7 +57,7 @@ export const Navbar = () => {
                     </span>
 
                     {
-                        showSubNavbar && <SubNav/> 
+                        showSubNavbar && <SubNav eventAddNote={onCreateNote}/> 
                     }
                 </div>
             </nav>

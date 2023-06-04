@@ -91,3 +91,19 @@ export const startDeletingNote = () =>{
         dispatch(deleteNoteById(activeNote.id));
     }
 }
+
+// ? implementar la peticion de eliminacion de la imagen
+export const startDeletePhoto = ( id ) =>{
+    return async () => {    
+        const response = await fetch(`http://localhost:8080/api/cloudinary?id=${id}&folder=journal-app&typeResource=image`,{
+            method : "DELETE",
+            mode :"cors",
+            headers : {
+                "Content-Type": "application/json"
+            },
+            credentials :"omit"
+        });
+        console.log(response)
+        
+    }
+}

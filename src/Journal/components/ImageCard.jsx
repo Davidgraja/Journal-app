@@ -1,10 +1,22 @@
 import { IconTrash , IconExternalLink } from '@tabler/icons-react';
+import { useDispatch } from 'react-redux';
+import { startDeletePhoto } from '../../store/journal/thunks';
 
 export const ImageCard = ({url}) => {
+    
+    //* Redux :
+    const dispatch = useDispatch(); 
+
+    const onDeletePhoto = () =>{
+        const separator  = url.split('/');
+        const  indexId = separator[separator.length - 1].split('.'); 
+        const id = indexId[0];
+        dispatch(startDeletePhoto(id))
+    }
     return (
         <div >
             <section className="  flex items-center justify-evenly mb-1">
-                <button className="p-1 rounded-md m-1  text-red-600 hover:bg-red-600 hover:text-white" title='Eliminar' onClick={ () => console.log(url) }> 
+                <button className="p-1 rounded-md m-1  text-red-600 hover:bg-red-600 hover:text-white" title='Eliminar' onClick={ onDeletePhoto }> 
                     <IconTrash />
                 </button>
 

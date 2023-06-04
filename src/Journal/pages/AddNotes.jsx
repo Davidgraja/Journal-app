@@ -47,17 +47,10 @@ export const AddNotes = () => {
     
     //* Functions 
     const onSaveNote = () =>{
-        dispatch(setActiveNote({
-            title,
-            body ,
-            imageUrl : files,
-            date
-        }))
-
+        
         dispatch(startUploadingFiles(files));
         dispatch(startNewNote());
-        
-        
+
         setTimeout(()=>{
             dispatch(updateMessageSave(null));
         },5000)

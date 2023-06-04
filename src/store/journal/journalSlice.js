@@ -37,7 +37,6 @@ export const journalSlice = createSlice({
 
         setSaving : (state )=>{
             state.isSaving = true;
-            // state.message = {};
         },
 
         updateNote : (state , action)=>{
