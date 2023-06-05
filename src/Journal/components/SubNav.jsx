@@ -18,8 +18,7 @@ export const SubNav = ({eventAddNote}) => {
             <hr />
             
             <Li eventClick={()=> dispatch(startLogout())}> Logout </Li>
-            <Li> Eliminar cuenta </Li>
-            
+                        
             <hr className=" block md:hidden" />
             
             <Li addClass={'md:hidden'}>
