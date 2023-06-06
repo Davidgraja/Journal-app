@@ -2,7 +2,7 @@
 
 Journal app es un proyecto que te permitira gestionar todos tus apuntes sin miedo a perder cada uno de estos , ademas de poder subir imagenes dentro de la app
 
-puedes ver y hacer uso de esta app en [calendar app ](https://davidgp-journal-app.netlify.app)  , disfrutalo !!👋
+puedes ver y hacer uso de esta app en [journal app ](https://davidgp-journal-app.netlify.app)  , disfrutalo !!👋
 
 ## Uso de la app 
 
